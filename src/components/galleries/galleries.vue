@@ -1,6 +1,6 @@
 <template>
   <v-card height="100vh" color="rgb(255, 255, 255, 0.2)">
-    <v-tabs v-model="tab" background-color="deep-purple accent-4" center-active dark grow>
+    <v-tabs v-model="tab" center-active grow>
       <v-tab
         v-for="(gallery, index) in galleries"
         :key="'gallery' + index"
