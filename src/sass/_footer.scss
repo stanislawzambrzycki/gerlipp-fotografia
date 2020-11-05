@@ -1,0 +1,34 @@
+.footer {
+  width: 100%;
+  height: auto;
+  padding: 1em;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: $teritiary-color;
+  color: $secondary-color;
+  h1 {
+    font-size: 1.5rem;
+    margin: 0.5em;
+
+    @include mediaLg {
+      font-size: 1.4rem;
+    }
+
+    @include mediaMd {
+      font-size: 1.3rem;
+    }
+
+    @include mediaSm {
+      font-size: 1.2rem;
+    }
+
+    @include mediaXs {
+      font-size: 1.1rem;
+    }
+  }
+  & span {
+    font-family: "Playfair Display", serif;
+  }
+}

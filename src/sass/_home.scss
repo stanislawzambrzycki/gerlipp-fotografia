@@ -1,0 +1,109 @@
+.home {
+  padding: 2rem 4vw;
+}
+
+.home h1 {
+  color: $primary-color;
+  font-family: "Playfair Display", serif;
+  font-size: 3rem;
+  align-self: center;
+  padding: 1em 0.5em;
+}
+
+.watches-display {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  @include mediaSm {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+  img {
+    width: 29vw;
+    height: 29vw;
+    margin: 2rem auto;
+    filter: saturate(40%);
+
+    @include mediaSm {
+      width: 70vw;
+      height: 70vw;
+    }
+
+    &:hover,
+    &:focus {
+      filter: none;
+      @include easeOut;
+    }
+  }
+}
+
+.call-to-action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+  width: 100%;
+
+  @include mediaMd {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  @include mediaSm {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  @include mediaXs {
+    padding: 1em 0;
+  }
+
+  p {
+    color: $primary-color;
+    font-family: "Playfair Display", serif;
+    font-size: 1.5rem;
+    padding: 1em;
+    width: 70%;
+    // max-width: 70%;
+    border-right: 1px solid rgba(25, 25, 25, 0.1);
+
+    @include mediaLg {
+      font-size: 1.5rem;
+    }
+
+    @include mediaMd {
+      font-size: 1.7rem;
+      width: 90%;
+    }
+
+    @include mediaSm {
+      font-size: 1.3rem;
+      width: 100%;
+    }
+
+    @include mediaXs {
+      font-size: 1.1rem;
+      width: 100%;
+    }
+  }
+
+  div {
+    padding: 1em;
+    width: auto;
+    @include mediaMd {
+      display: flex;
+    }
+
+    @include mediaSm {
+      display: flex;
+    }
+
+    @include mediaXs {
+      flex-direction: column;
+    }
+  }
+}
