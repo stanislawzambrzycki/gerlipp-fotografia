@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
 /dist
-src/assets/
+assets/
+galeria-1/
 
 *.jpg
 *.png
