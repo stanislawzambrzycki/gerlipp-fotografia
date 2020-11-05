@@ -1,0 +1,76 @@
+$primary-color: rgba(25, 25, 25, 1);
+$secondary-color: rgba(235, 235, 235, 1);
+$teritiary-color: rgba(5, 0, 0, 1);
+
+@import "mixins";
+
+* {
+  margin: 0;
+  padding: 0;
+  line-height: 1.5em;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Montserrat", sans-serif;
+  @include mediaXXl {
+    font-size: 16px;
+  }
+
+  @include mediaXl {
+    font-size: 14px;
+  }
+
+  @include mediaLg {
+    font-size: 12px;
+  }
+
+  @include mediaMd {
+    font-size: 11px;
+  }
+}
+
+:focus {
+  outline: none;
+}
+
+body,
+.content,
+.home,
+.products,
+.about,
+.contact {
+  width: 100%;
+  height: 100%;
+  background: $secondary-color;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.navigation {
+  width: 100%;
+  height: auto;
+  padding: 1em 4vw;
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  background: $teritiary-color;
+}
+
+@import "menu";
+@import "navbar";
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&display=swap");
+// @import "logo";
+// @import "navigation";
+@import "home";
+@import "products";
+@import "about";
+@import "contact";
+@import "footer";
+@import "scrollbar";
+@import "buttons";
+
+@import "media-queries";

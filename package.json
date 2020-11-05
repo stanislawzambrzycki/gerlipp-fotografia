@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "sass": "node-sass -w src/scss/ -o public/css/ --recursive"
   },
   "dependencies": {
     "core-js": "^3.6.5",

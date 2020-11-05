@@ -1,4 +1,4 @@
-import Gallery from "./gallery/gallery.vue"
+import Gallery from "./gallery/gallery.vue";
 
 export default {
     name: 'Galleries',
