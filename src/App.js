@@ -1,15 +1,17 @@
-import About from "./components/about/about.vue"
-import Contact from "./components/contact/contact.vue"
-import Galleries from "./components/galleries/galleries.vue"
-import Greeting from "./components/greeting/greeting.vue"
+import About from "./components/about/about.vue";
+import Contact from "./components/contact/contact.vue";
+import Showcase from "./components/showcase/showcase.vue";
+import Greeting from "./components/greeting/greeting.vue";
 
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
-    About, Contact, Galleries, Greeting
+    About,
+    Contact,
+    Showcase,
+    Greeting,
   },
 
-  data: () => ({
-  }),
+  data: () => ({}),
 };

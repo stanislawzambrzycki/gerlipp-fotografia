@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <v-main class="background" style="height: 200vh">
-      <v-btn fixed top right icon fab><v-icon>menu</v-icon></v-btn>
+    <v-main class="background">
+      <v-btn fixed top right icon fab><v-icon large>menu</v-icon></v-btn>
       <Greeting />
-      <Galleries />
+      <Showcase />
       <About />
       <Contact />
     </v-main>

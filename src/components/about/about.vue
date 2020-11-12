@@ -1,7 +1,18 @@
-<template>    
-    <v-card height="90vh" color="rgb(255, 255, 255, 0.2)">
-        About
-    </v-card>
+<template>
+  <v-card class="about">
+    <div class="text-content">
+      <div class="header">About</div>
+      <div class="p">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis
+        repudiandae recusandae consequatur esse maiores doloremque unde eaque
+        incidunt veniam molestias eveniet error nihil reprehenderit soluta
+        cumque illum iste, hic velit? Quaerat ea temporibus quisquam soluta
+        itaque numquam corrupti dolore nulla minus, aperiam adipisci quo et
+        facilis, quibusdam nesciunt laboriosam. Nam?
+      </div>
+    </div>
+    <img src="https://cdn.vuetifyjs.com/images/parallax/material.jpg" />
+  </v-card>
 </template>
 
-<script src="./about.js"/>
+<script src="./about.js" />
