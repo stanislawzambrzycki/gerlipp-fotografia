@@ -2,7 +2,7 @@
   <v-dialog v-model="current.show" fullscreen>
     <v-sheet height="100vh" class="overflow-x-hidden">
       <v-row no-gutters>
-        <v-col class="d-flex flex-column">
+        <v-col class="d-flex flex-column" cols="1">
           <v-btn icon x-large class="ma-4" @click="fullscreen"
             ><v-icon>open_in_full</v-icon></v-btn
           >
@@ -28,7 +28,7 @@
             ><v-icon>arrow_forward_ios</v-icon></v-btn
           >
         </v-col>
-        <v-col class="d-flex flex-column">
+        <v-col class="d-flex flex-column" cols="1">
           <v-btn
             icon
             x-large
