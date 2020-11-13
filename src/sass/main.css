@@ -1,0 +1,207 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap");
+*,
+.v-application {
+  margin: 0;
+  padding: 0;
+  font-family: "Playfair Display", serif;
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: 0.14rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html {
+  font-size: 18px;
+}
+
+:focus {
+  outline: none;
+}
+
+body,
+.background {
+  width: 100%;
+  height: 100%;
+  min-height: 200vh;
+  color: #191919;
+  background: #fafafa;
+}
+
+.greeting,
+.showcase,
+.tab,
+.tabs,
+.gallery,
+.image,
+.about,
+.contact {
+  width: auto;
+  height: auto;
+}
+
+.greeting {
+  background: black;
+}
+
+.greeting .v-parallax__image-container {
+  opacity: 0.8;
+}
+
+.hello {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100%;
+  margin: 2rem;
+  margin-bottom: 1rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.hello h1,
+.hello h3,
+.hello h5,
+.hello h6 {
+  font-family: "Playfair Display", serif;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.hello h1,
+.hello h3,
+.hello h5 {
+  text-transform: capitalize;
+}
+
+.hello h1 {
+  font-size: 4rem;
+}
+
+.hello h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+}
+
+.hello h5 {
+  font-size: 1.2rem;
+}
+
+.hello h6 {
+  font-size: 1.2rem;
+}
+
+.hello :first-child {
+  margin-bottom: auto;
+}
+
+.hello :last-child {
+  margin-top: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.hello :last-child h5 {
+  margin-bottom: 1rem;
+}
+
+.tab {
+  font-size: 1rem;
+}
+
+.v-card__title {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-transform: capitalize;
+  padding: 2vw 0;
+  display: none;
+}
+
+.gallery {
+  padding: 3vw 2vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 270vh;
+}
+
+.image {
+  width: 33.3%;
+}
+
+.about,
+.contact {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 0.5em 2vw;
+}
+
+.about .text-content,
+.contact .text-content {
+  padding: 0.5em 2vw;
+}
+
+.about .text-content .header,
+.contact .text-content .header {
+  font-size: 1.4rem;
+  margin-bottom: 0.5em;
+}
+
+.about .text-content span,
+.contact .text-content span {
+  font-size: 1.1rem;
+}
+
+.about .text-content .p,
+.contact .text-content .p {
+  font-size: 1.1rem;
+  max-width: 1200px;
+}
+
+.about img,
+.contact img {
+  -ms-flex-preferred-size: 400px;
+      flex-basis: 400px;
+  margin: 1em 2vw 1em auto;
+  border-radius: 3px;
+  -webkit-box-shadow: 2px 3px 2px -2px rgba(0, 0, 0, 0.4);
+          box-shadow: 2px 3px 2px -2px rgba(0, 0, 0, 0.4);
+}
+/*# sourceMappingURL=main.css.map */
