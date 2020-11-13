@@ -1,0 +1,24 @@
+.tab {
+  font-size: 1rem;
+}
+
+.v-card__title {
+  justify-content: center;
+  text-transform: capitalize;
+  padding: 2vw 0;
+  display: none;
+}
+
+.gallery {
+  padding: 3vw 2vw;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  height: 270vh;
+}
+
+.image {
+  width: 33.33%;
+}

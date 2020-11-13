@@ -1,0 +1,64 @@
+.greeting {
+  background: black;
+  .v-parallax__image-container {
+    opacity: 0.8;
+  }
+}
+
+.hello {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  margin: 2rem;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+
+  h1,
+  h3,
+  h5,
+  h6 {
+    font-family: "Playfair Display", serif;
+    font-weight: 300;
+    line-height: 1.2;
+  }
+
+  h1,
+  h3,
+  h5 {
+    text-transform: capitalize;
+  }
+
+  h1 {
+    font-size: 4rem;
+  }
+
+  h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 2rem;
+  }
+
+  h5 {
+    font-size: 1.2rem;
+  }
+
+  h6 {
+    font-size: 1.2rem;
+  }
+
+  :first-child {
+    margin-bottom: auto;
+  }
+  :last-child {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    h5 {
+      margin-bottom: 1rem;
+    }
+  }
+}
