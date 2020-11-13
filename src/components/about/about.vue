@@ -1,7 +1,7 @@
 <template>
   <v-card class="about">
     <div class="text-content">
-      <div class="header">About</div>
+      <div class="header">O mnie</div>
       <div class="p">
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis
         repudiandae recusandae consequatur esse maiores doloremque unde eaque

@@ -1,20 +1,5 @@
-import About from "./components/about/about.vue";
-import Contact from "./components/contact/contact.vue";
-import Showcase from "./components/showcase/showcase.vue";
-import Greeting from "./components/greeting/greeting.vue";
-import Menu from "./components/menu/menu.vue";
-
 export default {
-  name: "App",
-
-  components: {
-    About,
-    Contact,
-    Showcase,
-    Greeting,
-    Menu,
-  },
-
+  name: "menuComponent",
   data() {
     return {
       showMenu: false,

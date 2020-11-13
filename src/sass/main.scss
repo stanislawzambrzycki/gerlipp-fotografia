@@ -1,5 +1,8 @@
 $primary-color: rgba(25, 25, 25, 1);
 $secondary-color: rgba(250, 250, 250, 1);
+@mixin easeOut {
+  transition: all 0.7s ease-out;
+}
 
 @import "media-queries";
 
@@ -71,6 +74,6 @@ body,
 @import "greeting";
 @import "gallery";
 @import "about_&_contact";
-// @import "buttons";
+@import "menu";
 
 @import "media-queries";

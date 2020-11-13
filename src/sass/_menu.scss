@@ -1,78 +1,11 @@
-.hamburger-menu {
-  width: auto;
-  height: auto;
-  // padding: 1em 2em;
-  display: none;
-
-  @include mediaSm {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-right: auto;
-  }
-}
-
-.menu-btn {
-  z-index: 3;
-  cursor: pointer;
-  @include easeOut;
-
-  .btn-line {
-    &:nth-child(1) {
-      width: 35px;
-      height: 5px;
-      margin: 0 0 5px 0;
-      background-color: white;
-      @include easeOut;
-    }
-
-    &:nth-child(2) {
-      width: 35px;
-      height: 5px;
-      margin: 0 0 5px 0;
-      background-color: white;
-      @include easeOut;
-    }
-
-    &:nth-child(3) {
-      width: 35px;
-      height: 5px;
-      margin: 0;
-      background-color: white;
-      @include easeOut;
-    }
-  }
-
-  // Rotate Into X With Menu Lines
-  &.close {
-    transform: rotate(180deg);
-
-    .btn-line {
-      // Line 1 - Rotate
-      &:nth-child(1) {
-        // transform: rotate(45deg) translate(7.5px, 7.5px);
-        transform: translate(0px, 12px) rotate(-45deg);
-      }
-      // Line 2 - Hide
-      &:nth-child(2) {
-        opacity: 0;
-      }
-      // Line 3 - Rotate
-      &:nth-child(3) {
-        // transform: rotate(135deg) translate(-7px, 6.5px);
-        transform: translate(0px, -8px) rotate(45deg);
-      }
-    }
-  }
-}
-
 // Menu Overlay
 .menu {
   position: fixed;
   z-index: 2;
   top: 0;
+  right: 0;
   width: 18vw;
-  height: max-content;
+  height: 100vh;
   visibility: hidden;
   overflow: hidden;
 
@@ -103,12 +36,12 @@
 
     float: left;
     width: 100%;
-    height: auto;
+    height: 100%;
     overflow: hidden;
     // opacity: 0.5;
     margin: 0;
     padding: 30vh 0;
-    background: $teritiary-color;
+    background: rgba($primary-color, 0.3);
     list-style: none;
     transform: translate3d(0, -100%, 0);
     @include easeOut;

@@ -1,9 +1,9 @@
 <template>
-  <v-card class="gallery">
+  <v-card>
     <!-- <v-card-title>
       {{ gallery.name }}
     </v-card-title> -->
-    <magic-grid maxCols="5" maxColWidth="420">
+    <v-card class="gallery">
       <v-card
         class="image"
         v-for="(image, index) in gallery.images"
@@ -14,7 +14,7 @@
           <v-icon>favorite_border</v-icon>
         </v-btn>
       </v-card>
-    </magic-grid>
+    </v-card>
     <DialogComponent v-bind:gallery="gallery" v-bind:current="current" />
   </v-card>
 </template>
