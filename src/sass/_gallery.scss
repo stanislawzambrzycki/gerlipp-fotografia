@@ -14,9 +14,8 @@
   // display: flex;
   // flex-direction: column;
   // flex-wrap: wrap;
-  // justify-content: flex-start;
+  // justify-content: space-evenly;
   // align-items: center;
-  // height: 270vh;
 
   @include mediaXXl {
     font-size: 20px;
@@ -46,6 +45,11 @@
 .image {
   width: 33.33%;
   height: auto;
+
+  &:hover {
+    filter: brightness(0.85) saturate(1.15);
+    @include easeOut;
+  }
 
   @include mediaXXl {
     width: 33.33%;

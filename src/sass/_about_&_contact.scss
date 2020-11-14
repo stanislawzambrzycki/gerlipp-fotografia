@@ -6,7 +6,6 @@
 
   .text-content {
     padding: 0.5em 2vw;
-    // margin-left: 2vw;
 
     .header {
       font-size: 1.2rem;
@@ -25,9 +24,24 @@
   }
 
   img {
-    flex-basis: 400px;
+    width: 150px;
+    height: 200px;
     margin: 1em 2vw 1em auto;
     border-radius: 3px;
     box-shadow: 2px 3px 2px -2px rgba(0, 0, 0, 0.4);
+
+    display: none;
+
+    @include mediaMd {
+      display: none;
+    }
+
+    @include mediaSm {
+      display: none;
+    }
+
+    @include mediaXs {
+      display: none;
+    }
   }
 }

@@ -1,7 +1,11 @@
+.menu-btn {
+  z-index: 1000 !important;
+}
+
 // Menu Overlay
 .menu {
   position: fixed;
-  z-index: 2;
+  z-index: 100;
   top: 0;
   right: 0;
   width: 18vw;
@@ -22,7 +26,11 @@
   }
 
   @include mediaSm {
-    width: 60vw;
+    width: 50vw;
+  }
+
+  @include mediaXs {
+    width: 100vw;
   }
 
   &.show {
@@ -45,6 +53,14 @@
     list-style: none;
     transform: translate3d(0, -100%, 0);
     @include easeOut;
+
+    @include mediaSm {
+      background: rgba($primary-color, 0.8);
+    }
+
+    @include mediaXs {
+      background: rgba($primary-color, 0.95);
+    }
 
     &.show {
       //Slide in from top
@@ -75,12 +91,14 @@
     position: relative;
     font-size: 1.5rem;
     text-transform: uppercase;
-    padding: 1rem 0;
+    padding: 1.7rem 0 0 0;
     font-weight: 300;
     color: $secondary-color;
     text-decoration: none;
     text-align: center;
+
     @include easeOut;
+    border-bottom: 1px solid transparent;
 
     @include mediaXl {
       font-size: 1.6rem;
@@ -98,7 +116,7 @@
     }
 
     &:hover {
-      color: $secondary-color;
+      border-bottom: 1px solid $secondary-color;
     }
   }
 }
