@@ -15,7 +15,7 @@
           href="#"
           class="nav-link"
           @click="$emit('navigate', 'gallery'), toggleMenu()"
-          >Galerie
+          >Gallery
         </a>
       </li>
 
@@ -24,7 +24,7 @@
           href="#"
           class="nav-link"
           @click="$emit('navigate', 'about'), toggleMenu()"
-          >O mnie
+          >About
         </a>
       </li>
 
@@ -33,7 +33,7 @@
           href="#"
           class="nav-link"
           @click="$emit('navigate', 'contact'), toggleMenu()"
-          >Kontakt
+          >Contact
         </a>
       </li>
     </ul>

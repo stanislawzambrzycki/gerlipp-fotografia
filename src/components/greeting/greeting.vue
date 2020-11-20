@@ -7,7 +7,6 @@
       <div class="hello">
         <h3>photography pgerlipp</h3>
         <h1>Models</h1>
-        <h6>20 styczeń 2020</h6>
 
         <div>
           <h5>Obejrzyj zdjęcia</h5>

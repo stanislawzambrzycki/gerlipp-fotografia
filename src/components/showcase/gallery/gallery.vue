@@ -20,15 +20,19 @@
         v-for="(split, index) in splitted"
         :key="index + 'split'"
         class="d-flex flex-column"
-        :cols="Math.floor(12/splitted.length)"
+        :cols="Math.floor(12 / splitted.length)"
       >
         <v-card
-        width="100%"
-          class="image"
+          width="100%"
+          class="image-card"
           v-for="(image, index2) in split"
           :key="image + '' + index2"
         >
-          <v-img :src="image.image" @click="openDialog(image.image, image.index)" />
+          <v-img
+            class="image"
+            :src="image.image"
+            @click="openDialog(image.image, image.index)"
+          />
           <v-btn icon dark small absolute bottom left fab class="mb-8">
             <v-icon>favorite_border</v-icon>
           </v-btn>
