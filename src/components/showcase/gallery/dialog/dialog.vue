@@ -12,8 +12,8 @@
           </v-btn>
         </v-col>
         <v-col cols="10" class="d-flex justify-space-between align-center">
-          <v-btn absolute center left icon large @click="previous"
-            ><v-icon>arrow_back_ios</v-icon></v-btn
+          <v-btn absolute center left icon x-large @click="previous"
+            ><v-icon>mdi-arrow-left</v-icon></v-btn
           >
           <v-sheet height="100vh" width="100%" class="d-flex">
             <v-img
@@ -24,8 +24,8 @@
               class="ma-auto"
             />
           </v-sheet>
-          <v-btn absolute center right icon large @click="next"
-            ><v-icon>arrow_forward_ios</v-icon></v-btn
+          <v-btn absolute center right icon x-large @click="next"
+            ><v-icon>mdi-arrow-right</v-icon></v-btn
           >
         </v-col>
         <v-col class="d-flex flex-column" cols="1">
