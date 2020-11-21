@@ -29,7 +29,7 @@
           :key="image + '' + index2"
         >
           <v-img :src="image.image" @click="openDialog(image.image, image.index)" />
-          <v-btn icon dark small absolute bottom left fab class="mb-8">
+          <v-btn icon dark small absolute bottom left fab class="mb-8" @click="color='red'">
             <v-icon>favorite_border</v-icon>
           </v-btn>
         </v-card>
