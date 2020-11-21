@@ -1,12 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap");
 *,
 .v-application {
   margin: 0;
   padding: 0;
-  font-family: "Playfair Display", serif;
   font-weight: 300;
   line-height: 1.5;
-  letter-spacing: 0.14rem;
+  letter-spacing: 0.12rem;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
@@ -117,7 +115,7 @@ body,
 }
 
 .greeting .v-parallax__image-container {
-  opacity: 0.8;
+  opacity: 0.5;
   width: 100%;
 }
 
@@ -192,26 +190,23 @@ body,
 
 .hello h1,
 .hello h3,
-.hello h5,
-.hello h6 {
-  font-family: "Playfair Display", serif;
+.hello h5 {
   font-weight: 300;
   line-height: 1.2;
 }
 
 .hello h1,
-.hello h3,
 .hello h5 {
   text-transform: capitalize;
 }
 
 .hello h1 {
   font-size: 4rem;
+  font-weight: 700;
 }
 
 .hello h3 {
-  font-family: "Playfair Display", serif;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 @media screen and (max-width: 600px) {
@@ -222,10 +217,6 @@ body,
 }
 
 .hello h5 {
-  font-size: 1.2rem;
-}
-
-.hello h6 {
   font-size: 1.2rem;
 }
 
@@ -306,50 +297,50 @@ body,
   }
 }
 
-.image {
+.image-card {
   width: 33.33%;
   height: auto;
 }
 
-.image:hover {
-  -webkit-filter: brightness(0.85) saturate(1.15);
-          filter: brightness(0.85) saturate(1.15);
+.image-card .image:hover {
+  -webkit-filter: brightness(0.6);
+          filter: brightness(0.6);
   -webkit-transition: all 0.7s ease-out;
   transition: all 0.7s ease-out;
 }
 
 @media screen and (min-width: 1401px) {
-  .image {
+  .image-card {
     width: 33.33%;
   }
 }
 
 @media screen and (min-width: 1201px) and (max-width: 1400px) {
-  .image {
+  .image-card {
     width: 33.33%;
   }
 }
 
 @media screen and (min-width: 961px) and (max-width: 1200px) {
-  .image {
+  .image-card {
     width: 33.33%;
   }
 }
 
 @media screen and (min-width: 820px) and (max-width: 960px) {
-  .image {
+  .image-card {
     width: 75%;
   }
 }
 
 @media screen and (max-width: 820px) {
-  .image {
+  .image-card {
     width: 75%;
   }
 }
 
 @media screen and (max-width: 600px) {
-  .image {
+  .image-card {
     width: 80%;
   }
 }
@@ -421,7 +412,7 @@ body,
 }
 
 .menu-btn {
-  z-index: 1000 !important;
+  z-index: 101 !important;
 }
 
 .menu {
@@ -599,5 +590,52 @@ body,
 .nav-item:nth-child(5) {
   -webkit-transition-delay: 0.75s;
           transition-delay: 0.75s;
+}
+
+.cms {
+  height: 100vh;
+  width: 100vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 0.5em 2vw;
+}
+
+.cms .text-content {
+  padding: 0.5em 2vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.cms .text-content .header {
+  font-size: 1.2rem;
+  margin-bottom: 0.5em;
+  text-transform: uppercase;
+}
+
+.cms .text-content span {
+  font-size: 1.1rem;
+}
+
+.cms .text-content .p {
+  font-size: 1.1rem;
+  max-width: 1200px;
 }
 /*# sourceMappingURL=main.css.map */

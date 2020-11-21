@@ -5,6 +5,7 @@ import Contact from "./components/contact/contact.vue";
 import Showcase from "./components/showcase/showcase.vue";
 import Greeting from "./components/greeting/greeting.vue";
 import Menu from "./components/menu/menu.vue";
+import CMS from "./components/cms/cms.vue";
 
 export default {
   name: "App",
@@ -15,6 +16,7 @@ export default {
     Showcase,
     Greeting,
     Menu,
+    CMS,
   },
 
   data() {
@@ -24,7 +26,8 @@ export default {
       menubtn: {
         dark: true
       },
-      greetingIntersect: false
+      greetingIntersect: false,
+      showCMS: false,
     };
   },
   beforeDestroy() {

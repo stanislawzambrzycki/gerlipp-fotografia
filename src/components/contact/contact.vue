@@ -1,7 +1,7 @@
 <template>
   <v-card class="contact" data-name="contact">
     <div class="text-content">
-      <div class="header">Kontakt</div>
+      <div class="header">Contact</div>
       <div class="p"><span>Email: </span>email@email.com</div>
       <div class="p"><span>Telefon: </span>+48 999 999 999</div>
     </div>
