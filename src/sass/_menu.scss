@@ -81,9 +81,9 @@
       transform: translate3d(0, 0, 0);
     }
 
-    &.current > a {
-      color: $secondary-color;
-    }
+    // &.current > a {
+    //   border-bottom: 1px solid  $secondary-color;
+    // }
   }
 
   .nav-link {

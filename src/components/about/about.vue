@@ -1,5 +1,5 @@
 <template>
-  <v-card class="about">
+  <v-card class="about" data-name="about">
     <div class="text-content">
       <div class="header">About</div>
       <div class="p">

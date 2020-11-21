@@ -1,5 +1,5 @@
 <template>
-  <v-card class="showcase">
+  <v-card class="showcase" data-name="showcase">
     <v-tabs class="tabs" v-model="tab" center-active grow>
       <v-tab
         class="tab"

@@ -6,13 +6,16 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "sass": "node-sass -w src/scss/ -o public/css/ --recursive"
+    "sass": "node-sass -w src/scss/ -o src/sass/ --recursive"
   },
   "dependencies": {
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
     "vue-magic-grid": "0.0.4",
-    "vuetify": "^2.2.11"
+    "vue-scrollto": "^2.20.0",
+    "vuetify": "^2.2.11",
+    "vuex": "^3.5.1",
+    "vuex-persistedstate": "^4.0.0-beta.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

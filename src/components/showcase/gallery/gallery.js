@@ -9,7 +9,7 @@ export default {
   data() {
     return {
       splitted: [],
-      prefferedWidth: 300,
+      prefferedWidth: 600,
       current: {
         image: "",
         show: false,

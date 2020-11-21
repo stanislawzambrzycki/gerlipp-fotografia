@@ -1,3 +1,5 @@
+import VueScrollTo  from "vue-scrollto";
+
 import About from "./components/about/about.vue";
 import Contact from "./components/contact/contact.vue";
 import Showcase from "./components/showcase/showcase.vue";
@@ -20,10 +22,40 @@ export default {
   data() {
     return {
       showMenu: false,
+      observer: null,
+      menubtn: {
+        dark: true
+      },
+      greetingIntersect: false,
       showCMS: false,
     };
   },
+  beforeDestroy() {
+    this.observer.disconnect();
+  },
+  created() {
+    this.observer = new IntersectionObserver(
+      this.onElementObserved,
+      {
+        root: this.$el,
+        threshold: 0,
+      }
+    );
+  },
   methods: {
+    navigate(to) {
+      VueScrollTo.scrollTo(this.$refs[to].$el)
+    },
+    onElementObserved(entries) {
+      entries.forEach(({ target, isIntersecting }) => {
+        const name = target.getAttribute("data-name")
+        this.$refs.menu.toggleClass(isIntersecting, name)
+        if(name==='greeting') { 
+          this.greetingIntersect = isIntersecting
+          this.menubtn.dark = isIntersecting || this.showMenu
+        }
+      });
+    },
     toggleMenu() {
       let menuBtn = document.querySelector(".menu-btn");
       let menu = document.querySelector(".menu");
@@ -39,6 +71,7 @@ export default {
 
         // Reset Menu State
         this.showMenu = true;
+        this.menubtn.dark = true;
       } else {
         menuBtn.classList.remove("close");
         menu.classList.remove("show");
@@ -50,6 +83,7 @@ export default {
 
         // Reset Contact State
         this.showContact = false;
+        this.menubtn.dark = this.greetingIntersect
       }
     },
   },
