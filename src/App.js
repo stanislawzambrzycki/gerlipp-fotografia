@@ -1,4 +1,7 @@
 import VueScrollTo  from "vue-scrollto";
+import firebase from "firebase/app";
+import "firebase/firestore";
+import 'firebase/storage';
 
 import About from "./components/about/about.vue";
 import Contact from "./components/contact/contact.vue";
@@ -28,6 +31,7 @@ export default {
       },
       greetingIntersect: false,
       showCMS: false,
+      db: firebase.firestore(),
     };
   },
   beforeDestroy() {
@@ -41,6 +45,8 @@ export default {
         threshold: 0,
       }
     );
+  },
+  mounted() {
   },
   methods: {
     navigate(to) {
