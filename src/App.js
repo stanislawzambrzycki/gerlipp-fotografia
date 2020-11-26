@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       showMenu: false,
-      showCMS: false,
+      showCMS: true,
     };
   },
   methods: {
