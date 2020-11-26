@@ -1,4 +1,7 @@
 import DialogComponent from "./dialog/dialog.vue"
+import firebase from "firebase/app";
+import "firebase/firestore";
+import 'firebase/storage';
 
 export default {
   name: "Gallery",
@@ -9,12 +12,19 @@ export default {
   data() {
     return {
       splitted: [],
-      prefferedWidth: 300,
+      //prefferedWidth: 500,
+      widthBreakpoints: [
+        {width: 1600, preffered: 4},
+        {width: 1280, preffered: 3},
+        {width: 800, preffered: 2},
+        {width: 600, preffered: 1},
+      ],
       current: {
         image: "",
         show: false,
-        index: 0
-      }
+        index: 0,
+      },      
+      storage: firebase.storage().ref()
     }
   },
   methods: {
@@ -23,8 +33,16 @@ export default {
       this.current.index = index
       this.current.show = true
     },
+    getBreakPoint() {
+      for(let i = 0; i<this.widthBreakpoints.length; i++) {
+        if(this.$el.clientWidth>=this.widthBreakpoints[i].width) return this.widthBreakpoints[i].preffered
+      }
+      return 1
+    },
     splitGallery() {
-      let sections = Math.floor(this.$el.clientWidth / this.prefferedWidth)
+      //let prefferedWidth = this.getBreakPoint()
+      let sections = this.getBreakPoint()
+      //if(prefferedWidth > 0) Math.floor(this.$el.clientWidth / prefferedWidth)
       this.splitted = []
       for (let i = 0; i < sections; i++) this.splitted.push([])
       let index = 0
@@ -36,6 +54,20 @@ export default {
     }
   },
   created() {
+    this.gallery.images = []
+    this.storage.listAll().then(result => {
+      result.items.forEach(item => {
+        item.getDownloadURL().then(url => {
+          // var img = new Image()
+          // img.onload = function() {      
+          //   console.log(img.height, img.width)
+          // }
+          // img.src = url
+          this.gallery.images.push(url)
+          this.splitGallery()
+        })
+      })
+    })
     window.addEventListener("resize", this.splitGallery);
   },
   mounted() {

@@ -1,4 +1,10 @@
 export default {
-    name: 'Greeting'
+    name: 'Greeting',
+    props: {
+      observer: IntersectionObserver
+    },
+    mounted() {
+      this.observer.observe(this.$el);
+    }
   }
   

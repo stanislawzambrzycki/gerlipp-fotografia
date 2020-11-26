@@ -1,5 +1,5 @@
 <template>
-  <v-card class="contact">
+  <v-card class="contact" data-name="contact">
     <div class="text-content">
       <div class="header">Contact</div>
       <div class="p"><span>Email: </span>email@email.com</div>

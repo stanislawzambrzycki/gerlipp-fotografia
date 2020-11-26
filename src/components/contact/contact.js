@@ -1,4 +1,10 @@
 export default {
-    name: 'Contact'
+    name: 'Contact',
+    props: {
+      observer: IntersectionObserver
+    },
+    mounted() {
+      this.observer.observe(this.$el);
+    }
   }
   

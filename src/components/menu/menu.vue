@@ -1,38 +1,38 @@
 <template>
   <div class="menu">
     <ul class="menu-nav">
-      <li :class="main ? 'nav-item current' : 'nav-item'">
+      <li ref="greeting" class="nav-item">
         <a
           href="#"
           class="nav-link"
-          @click="$emit('navigate', 'home'), toggleMenu()"
+          @click="$emit('navigate', 'greeting')"
           >Home
         </a>
       </li>
 
-      <li :class="products ? 'nav-item current' : 'nav-item'">
+      <li ref="showcase" class="nav-item">
         <a
           href="#"
           class="nav-link"
-          @click="$emit('navigate', 'gallery'), toggleMenu()"
-          >Gallery
+          @click="$emit('navigate', 'showcase')"
+          >Galleries
         </a>
       </li>
 
-      <li :class="about ? 'nav-item current' : 'nav-item'">
+      <li ref="about" class="nav-item">
         <a
           href="#"
           class="nav-link"
-          @click="$emit('navigate', 'about'), toggleMenu()"
-          >About
+          @click="$emit('navigate', 'about')"
+          >About me
         </a>
       </li>
 
-      <li :class="contact ? 'nav-item current' : 'nav-item'">
+      <li ref="contact" class="nav-item">
         <a
           href="#"
           class="nav-link"
-          @click="$emit('navigate', 'contact'), toggleMenu()"
+          @click="$emit('navigate', 'contact')"
           >Contact
         </a>
       </li>
