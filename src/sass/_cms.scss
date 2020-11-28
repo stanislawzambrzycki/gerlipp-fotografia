@@ -1,31 +1,8 @@
 .cms {
   height: 100vh;
   width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5em 2vw;
-
-  .text-content {
-    padding: 0.5em 2vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    .header {
-      font-size: 1.2rem;
-      margin-bottom: 0.5em;
-      text-transform: uppercase;
-    }
-
-    span {
-      font-size: 1.1rem;
-    }
-
-    .p {
-      font-size: 1.1rem;
-      max-width: 1200px;
-    }
-  }
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+  // padding: 0.5em 2vw;
 }
