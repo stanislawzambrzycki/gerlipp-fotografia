@@ -9,7 +9,7 @@
         <h1>Models</h1>
 
         <div>
-          <h5>Obejrzyj zdjęcia</h5>
+          <h5>pictures</h5>
           <v-btn icon dark large><v-icon large>expand_more</v-icon></v-btn>
         </div>
       </div>
