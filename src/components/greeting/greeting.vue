@@ -10,7 +10,9 @@
 
         <div>
           <h5>pictures</h5>
-          <v-btn icon dark large><v-icon large>expand_more</v-icon></v-btn>
+          <v-btn icon dark large @click="$emit('navigate', 'showcase')"
+            ><v-icon large>expand_more</v-icon></v-btn
+          >
         </div>
       </div>
     </v-parallax>
