@@ -1,3 +1,8 @@
 export default {
-  name: "main_CMS",
-};
+    name: "main_CMS",
+    data() {
+      return {
+      }
+    }
+  };
+  

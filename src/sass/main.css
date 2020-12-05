@@ -57,7 +57,6 @@ body,
 .background {
   width: 100%;
   height: 100%;
-  min-height: 200vh;
   color: #191919;
   background: #fafafa;
 }
@@ -593,18 +592,14 @@ body,
 }
 
 .cms {
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  padding: 0.5em 2vw;
 }
 
 .cms .text-content {
@@ -637,5 +632,10 @@ body,
 .cms .text-content .p {
   font-size: 1.1rem;
   max-width: 1200px;
+}
+
+.cms .image-blur {
+  -webkit-filter: blur(3px);
+          filter: blur(3px);
 }
 /*# sourceMappingURL=main.css.map */
