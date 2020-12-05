@@ -21,8 +21,10 @@
     </v-toolbar>
 
     <v-card
-      class="mx-auto; elevation-4"
-      style="width: auto; height: 100vh;"
+      class="mx-auto elevation-4"
+      width="auto"
+      min-height="100vh"
+      height="100%"
       tile
     >
       <v-navigation-drawer color="grey darken-4" dark permanent>
@@ -93,14 +95,14 @@
         <v-divider></v-divider>
       </v-navigation-drawer>
     </v-card>
-    <v-card
+    <!-- <v-card
       style="width: 100%; height: 100%; background-color: red; display: flex; flex-direction: column;"
       tile
-    >
+    > -->
       <mainCMS v-if="showMainSettings" />
       <galleriesCMS v-if="showGalleries" />
     </v-card>
-  </v-card>
+  <!-- </v-card> -->
 </template>
 
 <script src="./cms.js" />

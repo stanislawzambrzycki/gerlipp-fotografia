@@ -1,18 +1,65 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css"
+    />
+    <v-main class="background">
+      <v-btn
+        ref="menubtn"
+        fixed
+        top
+        right
+        icon
+        :dark="menubtn.dark"
+        fab
+        x-large
+        class="menu-btn"
+        @click="toggleMenu"
+        ><v-icon large>menu</v-icon></v-btn
+      >
+      <Greeting
+        @navigate="navigate($event)"
+        ref="greeting"
+        v-bind:observer="observer"
+      />
+      <Menu @navigate="navigate($event)" ref="menu" />
+      <Showcase
+        @navigate="navigate($event)"
+        ref="showcase"
+        v-bind:observer="observer"
+      />
+      <About
+        @navigate="navigate($event)"
+        ref="about"
+        v-bind:observer="observer"
+      />
+      <Contact
+        @navigate="navigate($event)"
+        ref="contact"
+        v-bind:observer="observer"
+      />
+    </v-main>
+  </v-app>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="/__/firebase/8.0.2/firebase-app.js"></script>
 
-export default {
-  name: 'Home',
-  components: {
-    HelloWorld
-  }
-}
-</script>
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="/__/firebase/8.0.2/firebase-analytics.js"></script>
+
+  <!-- Initialize Firebase -->
+  <script src="/__/firebase/init.js"></script>
+<script src="./Home.js" />
+
+<style src="../sass/main.css" />

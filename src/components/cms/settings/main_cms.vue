@@ -1,5 +1,6 @@
 <template>
   <v-card
+    min-height="100vh"
     style="width: 100%; height: 100%; display: flex;
     flex-direction: column;
     justify-content: center;

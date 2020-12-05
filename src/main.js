@@ -7,6 +7,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import { config } from "./config/firebaseConfig";
+import router from './router'
 
 Vue.use(MagicGrid);
 
@@ -15,8 +16,11 @@ Vue.use(MagicGrid);
 Vue.config.productionTip = false;
 
 new Vue({
-  vuetify, store,
-  render: (h) => h(App),  
+  vuetify,
+  store,
+  render: (h) => h(App),
+  router,
+
   beforeMount() {
     firebase.initializeApp(config);
     firebase.auth().signInAnonymously()
