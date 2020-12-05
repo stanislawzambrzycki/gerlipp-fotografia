@@ -1,7 +1,8 @@
+import mainCMS from './settings/main_cms.vue'
+import galleriesCMS from './settings/galleries_cms.vue'
+
 export default {
   name: "CMS",
-<<<<<<< Updated upstream
-=======
   components: {
     mainCMS,
     galleriesCMS,
@@ -18,5 +19,4 @@ export default {
       showGalleries: false
     };
   },
->>>>>>> Stashed changes
 };

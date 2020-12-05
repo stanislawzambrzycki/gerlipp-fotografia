@@ -30,7 +30,7 @@ export default {
         dark: true
       },
       greetingIntersect: false,
-      showCMS: false,
+      showCMS: true,
       db: firebase.firestore(),
     };
   },

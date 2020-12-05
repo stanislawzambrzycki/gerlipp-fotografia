@@ -1,15 +1,4 @@
 <template>
-<<<<<<< Updated upstream
-  <v-card class="cms">
-    <div class="text-content">
-      <div class="header">CMS</div>
-      <div class="p">position 1</div>
-      <div class="p">position 1</div>
-      <div class="p">position 1</div>
-      <div class="p">position 1</div>
-      <div class="p">position 1</div>
-    </div>
-=======
   <v-card class="cms pa-0">
     <v-toolbar
       app
@@ -111,7 +100,6 @@
       <mainCMS v-if="showMainSettings" />
       <galleriesCMS v-if="showGalleries" />
     </v-card>
->>>>>>> Stashed changes
   </v-card>
 </template>
 
