@@ -4,9 +4,11 @@
     min-height="100vh"
     class="d-flex flex-column justify-center align-center mt-12"
   >
-    <v-card width="80%" class="mt-12 mx-auto">
-      <v-card-subtitle>Upload</v-card-subtitle>
-      <v-card-text>
+    <v-card style="width: 100%; margin-top: 64px;">
+      <v-card-subtitle style="width: 50%; font-size: 1.2rem"
+        >Upload</v-card-subtitle
+      >
+      <v-card-text style="width: 50%;">
         <v-file-input
           accept="image/*"
           label="File input"
@@ -22,7 +24,7 @@
     <v-card
       max-width="400px"
       height="auto"
-      class="ml-auto"
+      style="margin: 16px;"
       v-for="(image, index) in imageObjects"
       :key="index + 'lowRes'"
     >

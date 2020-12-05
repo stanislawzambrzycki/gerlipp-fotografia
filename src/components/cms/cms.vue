@@ -11,7 +11,7 @@
     >
       <v-spacer></v-spacer>
       <v-toolbar-title>
-        <span>content management system</span>
+        <span>Content Management System</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn color="grey darken-4" depressed right>
@@ -20,13 +20,7 @@
       </v-btn>
     </v-toolbar>
 
-    <v-card
-      class="mx-auto elevation-4"
-      width="auto"
-      min-height="100vh"
-      height="100%"
-      tile
-    >
+    <v-card class="mx-auto elevation-4" width="auto" min-height="100vh" tile>
       <v-navigation-drawer color="grey darken-4" dark permanent>
         <v-list style="margin-top: 64px">
           <v-list-item link>
@@ -40,7 +34,10 @@
         </v-list>
         <v-divider></v-divider>
         <v-list style="padding: 0">
-          <v-list-item link @click="showMainSettings=true, showGalleries=false">
+          <v-list-item
+            link
+            @click="(showMainSettings = true), (showGalleries = false)"
+          >
             <v-list-item-content style="padding: .5em 0">
               <v-list-item-title>Main Settings</v-list-item-title>
             </v-list-item-content>
@@ -49,7 +46,10 @@
         </v-list>
         <v-divider></v-divider>
         <v-list style="padding: 0">
-          <v-list-item link @click="showMainSettings=false, showGalleries=true">
+          <v-list-item
+            link
+            @click="(showMainSettings = false), (showGalleries = true)"
+          >
             <v-list-item-content style="padding: .5em 0">
               <v-list-item-title>Galleries</v-list-item-title>
             </v-list-item-content>
@@ -99,9 +99,9 @@
       style="width: 100%; height: 100%; background-color: red; display: flex; flex-direction: column;"
       tile
     > -->
-      <mainCMS v-if="showMainSettings" />
-      <galleriesCMS v-if="showGalleries" />
-    </v-card>
+    <mainCMS v-if="showMainSettings" />
+    <galleriesCMS v-if="showGalleries" />
+  </v-card>
   <!-- </v-card> -->
 </template>
 
