@@ -3,7 +3,7 @@ import Gallery from "./gallery/gallery.vue";
 export default {
   name: "Showcase",
   props: {
-    observer: IntersectionObserver
+    observer: IntersectionObserver,
   },
   mounted() {
     this.observer.observe(this.$el);
@@ -16,12 +16,11 @@ export default {
       tab: null,
       galleries: [
         {
-          name: "portrety",
-          images: [
-          ],
+          name: "portraits",
+          images: [],
         },
         {
-          name: "podróże",
+          name: "landscapes",
           images: [
             "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
             "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
@@ -37,5 +36,5 @@ export default {
         },
       ],
     };
-  }
+  },
 };
