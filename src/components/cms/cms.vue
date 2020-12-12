@@ -1,7 +1,6 @@
 <template>
   <v-card class="cms pa-0">
     <v-toolbar
-      app
       absolute
       top
       width="100%"

@@ -15,9 +15,8 @@ export default {
       //prefferedWidth: 500,
       widthBreakpoints: [
         {width: 1600, preffered: 4},
-        {width: 1280, preffered: 3},
-        {width: 800, preffered: 2},
-        {width: 600, preffered: 1},
+        {width: 1000, preffered: 3},
+        {width: 800, preffered: 1}
       ],
       current: {
         image: "",
