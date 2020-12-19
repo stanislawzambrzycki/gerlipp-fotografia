@@ -27,8 +27,9 @@ export default {
     }
   },
   methods: {
-    openDialog(image, index) {
+    openDialog(image, lazy, index) {
       this.current.image = image
+      this.current.lazy = lazy
       this.current.index = index
       this.current.show = true
     },
@@ -46,27 +47,14 @@ export default {
       for (let i = 0; i < sections; i++) this.splitted.push([])
       let index = 0
       this.gallery.images.forEach((image, index2) => {
-        this.splitted[index].push({ image: image, index: index2 })
+        this.splitted[index].push({ image: image.image, thumbnail: image.thumbnail, lazy: image.lazy, index: index2 })
         index = index + 1
         if (sections <= index) index = 0
       })
     }
   },
   created() {
-    this.gallery.images = []
-    this.storage.listAll().then(result => {
-      result.items.forEach(item => {
-        item.getDownloadURL().then(url => {
-          // var img = new Image()
-          // img.onload = function() {      
-          //   console.log(img.height, img.width)
-          // }
-          // img.src = url
-          this.gallery.images.push(url)
-          this.splitGallery()
-        })
-      })
-    })
+    console.log(this.gallery)
     window.addEventListener("resize", this.splitGallery);
   },
   mounted() {

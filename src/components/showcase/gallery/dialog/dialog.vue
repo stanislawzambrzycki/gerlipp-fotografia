@@ -17,10 +17,12 @@
           >
           <v-sheet height="100vh" width="100%" class="d-flex">
             <v-img
+              :key='"image"+current.index'
               :max-height="height"
               :max-width="width"
               contain
               :src="current.image"
+              :lazy-src="current.lazy"
               class="ma-auto"
             />
           </v-sheet>

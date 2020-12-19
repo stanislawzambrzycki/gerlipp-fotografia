@@ -8,12 +8,12 @@
       style="width: 100%; margin-top: 64px"
       :items="galleries"
       v-model="selectedGallery"
-      label="Galleries"
+      label="Select gallery"
       return-object
       item-text="name"
     />
     <div data-app></div>
-    <v-card style="width: 100%">
+    <v-card style="width: 100%" v-if="selectedGallery">
       <v-card-subtitle style="width: 50%; font-size: 1.2rem"
         >Upload</v-card-subtitle
       >
@@ -28,6 +28,7 @@
           @change="eventHandler"
           @click:clear="imageObjects = []"
         ></v-file-input>
+        <v-btn v-if="imageObjects.length>0" @click="saveImages()">Save</v-btn>
       </v-card-text>
     </v-card>
     <v-card

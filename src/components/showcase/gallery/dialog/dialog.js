@@ -17,13 +17,15 @@ export default {
             let index = this.current.index - 1
             if (index < 0) index = this.gallery.images.length - 1
             this.current.index = index
-            this.current.image = this.gallery.images[index]
+            this.current.image = this.gallery.images[index].image
+            this.current.lazy = this.gallery.images[index].lazy
         },
         next() {
             let index = this.current.index + 1
             if (this.gallery.images.length <= index) index = 0
             this.current.index = index
-            this.current.image = this.gallery.images[index]
+            this.current.image = this.gallery.images[index].image
+            this.current.lazy = this.gallery.images[index].lazy
         },
         fullscreen() {
             var elem = this.$el
