@@ -30,8 +30,9 @@
         >
           <v-img
             class="image"
-            :src="image.image"
-            @click="openDialog(image.image, image.index)"
+            :src="image.thumbnail"
+            :lazy-src="image.lazy"
+            @click="openDialog(image.image, image.lazy, image.index)"
           />
           <v-btn icon dark small absolute bottom left fab class="mb-8">
             <v-icon>favorite_border</v-icon>

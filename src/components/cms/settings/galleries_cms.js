@@ -1,6 +1,8 @@
 import downscale from "downscale"
 import firebase from "firebase"
 import "firebase/firestore"
+import 'firebase/app'
+import 'firebase/storage'
 
 class ImageObject {
   constructor(file) {
@@ -44,6 +46,7 @@ export default {
   data() {
     return {
       db: firebase.firestore(),
+      storage: firebase.app().storage().ref(),
       files: [],
       galleries: [],
       selectedGallery: null,
@@ -60,6 +63,40 @@ export default {
       var tmp = array[indexA];
       array[indexA] = array[indexB];
       array[indexB] = tmp;
+    },
+    async saveImages() {
+      for(let i=0; i<this.imageObjects.length; i++) {
+        let image = this.imageObjects[i]
+        let imageRef = null
+        let lazyRef = null
+        let thumbnailRef = null
+        this.selectedGallery.ref.collection('images').add({
+          name: image.file.name,
+          height: image.heightList,
+          width: image.widthList,
+          index: image.index,
+          image: imageRef,
+          lazy: lazyRef,
+          thumbnail: thumbnailRef,
+        }).then(ref => {
+          console.log(ref)
+          imageRef = this.storage.child('images/'+image.file.name).putString(image.imageList[0], 'data_url').then(async snapshot => {
+            let url = await snapshot.ref.getDownloadURL()
+            console.log(url, 'image')
+            ref.update({image: url})
+          })
+          lazyRef = this.storage.child('lazy/'+image.file.name).putString(image.imageList[1], 'data_url').then(async snapshot => {
+            let url = await snapshot.ref.getDownloadURL()
+            console.log(url, 'lazy')
+            ref.update({lazy: url})
+          })
+          thumbnailRef = this.storage.child('thumbnails/'+image.file.name).putString(image.imageList[2], 'data_url').then(async snapshot => {
+            let url = await snapshot.ref.getDownloadURL()
+            console.log(url, 'thumbnail')
+            ref.update({thumbnail: url})
+          })
+        })
+      }
     },
     changeImage() {
       if (this.imageIndex === 2) this.imageIndex = 0;

@@ -14,7 +14,7 @@
         v-for="(gallery, index) in galleries"
         :key="'gallery' + index"
       >
-        <Gallery class="px-6" v-bind:gallery="gallery" />
+        <Gallery ref="gallery" class="px-6" v-bind:gallery="gallery" />
       </v-tab-item>
     </v-tabs-items>
   </v-card>
