@@ -6,12 +6,20 @@
 .menu {
   position: fixed;
   z-index: 100;
-  top: 0;
-  right: 0;
   width: 18vw;
   height: 100vh;
   visibility: hidden;
   overflow: hidden;
+
+  &.top-right {
+    top: 0;
+    right: 0;
+  }
+
+  &.top-left {
+    top: 0;
+    left: 0;
+  }
 
   @include mediaXl {
     width: 22vw;
@@ -68,6 +76,10 @@
     }
   }
 
+  .menu-cms {
+    padding: 15vh 0;
+  }
+
   .nav-item {
     transform: translate3d(900px, 0, 0);
     @include easeOut;
@@ -121,9 +133,9 @@
   }
 }
 
-// Delay each nav item slide by 0.15s
-@for $x from 1 through 5 {
+// Delay each nav item slide by 0.1s
+@for $x from 1 through 7 {
   .nav-item:nth-child(#{$x}) {
-    transition-delay: $x * 0.15s;
+    transition-delay: $x * 0.1s;
   }
 }
