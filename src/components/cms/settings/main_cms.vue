@@ -14,7 +14,10 @@
     align-items: flex-start;"
     >
       <!-- <p>SCSS NIE ZAPISUJE NOWYCH DANYCH</p> -->
-      <v-card style="width: 100%; margin-top: 64px; font-size: 1.2rem" tile>
+      <v-card
+        style="width: 100%; height: 48vh; margin-top: 8px; font-size: 1.2rem;"
+        tile
+      >
         <v-card-subtitle style="width: 50%; font-size: 1.2rem">
           Colors
         </v-card-subtitle>
@@ -33,7 +36,10 @@
           ></v-text-field>
         </v-card-text>
       </v-card>
-      <v-card style="width: 100%; margin-top: 8px; font-size: 1.2rem" tile>
+      <v-card
+        style="width: 100%; height: 48vh; margin-top: 8px; font-size: 1.2rem;"
+        tile
+      >
         <v-card-subtitle style="width: 50%; font-size: 1.2rem">
           Fonts
         </v-card-subtitle>
@@ -49,5 +55,5 @@
     </div>
   </v-card>
 </template>
-
+<style src="../../../sass/main.css" />
 <script src="./main_cms.js" />

@@ -1,36 +1,22 @@
-import mainCMS from "./settings/main_cms.vue";
-import galleriesCMS from "./settings/galleries_cms.vue";
-import menuCMS from "./settings/menu_cms.vue";
-
 export default {
-  name: "CMS",
-  components: {
-    mainCMS,
-    galleriesCMS,
-    menuCMS,
-    // greetingCMS,
-    // navigationCMS,
-    // aboutCMS,
-    // contactCMS,
-  },
-
+  name: "menuCMS",
   data() {
     return {
-      showCMS: true,
-      showMainSettings: true,
-      showGalleries: false,
       showMenu: false,
+      menubtn: {
+        dark: true,
+      },
     };
   },
   methods: {
-    toggleMenu() {
+    toggleMenu(force = false) {
       let menuBtn = document.querySelector(".menu-btn");
       let menu = document.querySelector(".menu");
       let menuNav = document.querySelector(".menu-nav");
 
       let navItems = document.querySelectorAll(".nav-item");
 
-      if (!this.showMenu) {
+      if (!this.showMenu && !force) {
         menuBtn.classList.add("close");
         menu.classList.add("show");
         menuNav.classList.add("show");
@@ -38,7 +24,6 @@ export default {
 
         // Reset Menu State
         this.showMenu = true;
-        this.menubtn.dark = true;
       } else {
         menuBtn.classList.remove("close");
         menu.classList.remove("show");
@@ -50,7 +35,6 @@ export default {
 
         // Reset Contact State
         this.showContact = false;
-        this.menubtn.dark = this.greetingIntersect;
       }
     },
   },

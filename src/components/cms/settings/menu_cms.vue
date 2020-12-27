@@ -1,9 +1,9 @@
 <template>
   <div class="menu top-right">
-    <ul class="menu-nav">
+    <ul class="menu-nav menu-cms">
       <li ref="greeting" class="nav-item">
         <a href="#" class="nav-link" @click="$emit('navigate', 'greeting')"
-          >Home
+          >Main Settings
         </a>
       </li>
 
@@ -15,17 +15,33 @@
 
       <li ref="about" class="nav-item">
         <a href="#" class="nav-link" @click="$emit('navigate', 'about')"
-          >About me
+          >Navigation
         </a>
       </li>
 
       <li ref="contact" class="nav-item">
         <a href="#" class="nav-link" @click="$emit('navigate', 'contact')"
-          >Contact
+          >Navigation
+        </a>
+      </li>
+      <li ref="contact" class="nav-item">
+        <a href="#" class="nav-link" @click="$emit('navigate', 'contact')"
+          >Navigation
+        </a>
+      </li>
+      <li ref="contact" class="nav-item">
+        <a href="#" class="nav-link" @click="$emit('navigate', 'contact')"
+          >Navigation
+        </a>
+      </li>
+      <li ref="contact" class="nav-item">
+        <a href="#" class="nav-link" @click="$emit('navigate', 'contact')"
+          >Log Out
         </a>
       </li>
     </ul>
   </div>
 </template>
 
-<script src="./menu.js" />
+<style src="../../../sass/main.css" />
+<script src="./menu_cms.js" />
