@@ -8,6 +8,7 @@ import "firebase/firestore";
 import "firebase/auth";
 import { config } from "./config/firebaseConfig";
 import router from './router'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 Vue.use(MagicGrid);
 
@@ -16,6 +17,9 @@ Vue.use(MagicGrid);
 Vue.config.productionTip = false;
 
 new Vue({
+  icons: {
+    iconfont: 'md',
+  },
   vuetify,
   store,
   render: (h) => h(App),
