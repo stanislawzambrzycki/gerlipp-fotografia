@@ -5,6 +5,7 @@
         class="tab"
         v-for="(gallery, index) in galleries"
         :key="'gallery' + index"
+        @click="tabClick('gallery'+index)"
         >{{ gallery.name }}
       </v-tab>
     </v-tabs>
@@ -13,8 +14,9 @@
       <v-tab-item
         v-for="(gallery, index) in galleries"
         :key="'gallery' + index"
+        ref='galleryTab'
       >
-        <Gallery ref="gallery" class="px-6" v-bind:gallery="gallery" />
+        <Gallery :ref="'gallery'+index" class="px-6" v-bind:gallery="gallery" :key="'galleryComponent'+index" />
       </v-tab-item>
     </v-tabs-items>
   </v-card>

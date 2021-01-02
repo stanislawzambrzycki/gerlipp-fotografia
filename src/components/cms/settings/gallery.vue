@@ -14,19 +14,19 @@
           :key="image + '' + index2"
         >
           <v-img
-            eager
             class="image"
             :src="image.thumbnail"
             :lazy-src="image.lazy"
-            @click="openDialog(image.image, image.lazy, image.index)"
           />
-          <v-btn icon dark small absolute bottom left fab class="mb-8">
-            <v-icon>favorite_border</v-icon>
+          <v-btn icon dark small absolute bottom left fab class="mb-8"
+            ><v-icon>mdi-arrow-left</v-icon>
+          </v-btn>
+          <v-btn icon dark small absolute bottom right fab class="mb-8"
+            ><v-icon>mdi-arrow-right</v-icon>
           </v-btn>
         </v-card>
       </v-col>
     </v-row>
-    <DialogComponent v-bind:gallery="gallery" v-bind:current="current" />
   </v-card>
 </template>
 

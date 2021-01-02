@@ -2,46 +2,31 @@
   <div class="menu top-right">
     <ul class="menu-nav menu-cms">
       <li ref="greeting" class="nav-item">
-        <a href="#" class="nav-link" @click="$emit('navigate', 'greeting')"
+        <a href="#" class="nav-link" @click="$emit('navigate', 'main')"
           >Main Settings
         </a>
       </li>
 
       <li ref="showcase" class="nav-item">
-        <a href="#" class="nav-link" @click="$emit('navigate', 'showcase')"
+        <a href="#" class="nav-link" @click="$emit('navigate', 'galleries')"
           >Galleries
         </a>
       </li>
 
-      <li ref="about" class="nav-item">
+      <li ref="showcase" class="nav-item">
         <a href="#" class="nav-link" @click="$emit('navigate', 'about')"
-          >Navigation
+          >User data
         </a>
       </li>
 
-      <li ref="contact" class="nav-item">
-        <a href="#" class="nav-link" @click="$emit('navigate', 'contact')"
-          >Navigation
-        </a>
-      </li>
-      <li ref="contact" class="nav-item">
-        <a href="#" class="nav-link" @click="$emit('navigate', 'contact')"
-          >Navigation
-        </a>
-      </li>
-      <li ref="contact" class="nav-item">
-        <a href="#" class="nav-link" @click="$emit('navigate', 'contact')"
-          >Navigation
-        </a>
-      </li>
-      <li ref="contact" class="nav-item">
-        <a href="#" class="nav-link" @click="$emit('navigate', 'contact')"
-          >Log Out
+      <li ref="about" class="nav-item">
+        <a href="#" class="nav-link" @click="$emit('navigate', 'logout')"
+          >Logout
         </a>
       </li>
     </ul>
   </div>
 </template>
 
-<style src="../../../sass/main.css" />
+<style src="../../../sass/main.css"> </style>
 <script src="./menu_cms.js" />

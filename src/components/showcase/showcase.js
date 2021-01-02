@@ -8,7 +8,37 @@ export default {
   props: {
     observer: IntersectionObserver,
   },
+  methods: {
+    tabClick(galRefName) {
+      let component = this
+      new Promise(resolve => {
+        let callback = function() {
+          if(component.$refs[galRefName]) resolve()
+          else setTimeout(callback, 10)
+        }
+        setTimeout(callback, 10)
+      }).then(() => {
+        component.$refs[galRefName][0].splitGallery()
+      })
+    },
+    preloadLazyImages(galleryObj) {
+      let images = []      
+      let promises = []      
+      galleryObj.forEach(image => {
+        promises.push(new Promise( resolve => {
+          let img = new Image();
+          img.onload = function () {
+            resolve()
+          };
+          img.src = image.lazy
+          images.push(img)
+        }))
+      })
+      return [images, promises]
+    }
+  },
   async mounted() {
+    this.preloadImages = []
     this.observer.observe(this.$el);
     await this.db.collection('galleries').get().then(async galleriesDocs => {
       for(let i=0; i<galleriesDocs.docs.length; i++) {
@@ -20,8 +50,12 @@ export default {
         }
         this.galleries.push(galleryObj)
         await doc.ref.collection('images').get().then(imageDocs => {
-          galleryObj.images.push(...imageDocs.docs.map(imageDoc => { return imageDoc.data() }))
-          this.$refs.gallery.forEach(gal => {gal.splitGallery()})
+          let images = imageDocs.docs.map(imageDoc => { return imageDoc.data() })
+          let preload = this.preloadLazyImages(images)
+          this.preloadImages.push(preload[0])
+          Promise.all(preload[1]).then(
+            galleryObj.images.push(...imageDocs.docs.map(imageDoc => { return imageDoc.data() }))
+          )
         })
       }
     })
@@ -33,26 +67,8 @@ export default {
     return {
       db: firebase.firestore(),
       tab: null,
+      preloadImages: [],
       galleries: [
-        // {
-        //   name: "portraits",
-        //   images: [],
-        // },
-        // {
-        //   name: "landscapes",
-        //   images: [
-        //     "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
-        //     "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
-        //     "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
-        //     "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
-        //     "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
-        //     "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
-        //     "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
-        //     "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
-        //     "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
-        //     "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
-        //   ],
-        // },
       ],
     };
   },
