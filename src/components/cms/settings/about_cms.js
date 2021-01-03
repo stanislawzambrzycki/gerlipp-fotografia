@@ -27,8 +27,8 @@ export default {
       db: firebase.firestore(),
       aboutText: "",
       aboutRef: null,
-      contactText: "",
-      contactRef: [],
+      contactText: {phone: "", email: ""},
+      contactRef: null,
     };
   },
   methods: {
@@ -36,8 +36,7 @@ export default {
       this.aboutRef.update({ text: this.aboutText });
     },
     saveContact() {
-      this.aboutRef.update({ text: this.aboutText.phone });
-      this.aboutRef.update({ text: this.aboutText.email });
+      this.contactRef.update({ phone: this.contactText.phone, email: this.contactText.email });
     },
   },
 };
