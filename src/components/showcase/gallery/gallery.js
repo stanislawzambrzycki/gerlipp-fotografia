@@ -74,12 +74,12 @@ export default {
       })
       this.splitted = tmpSplitted
       console.log('Gallery '+this.gallery.name+' was splitted!')
-      if(!this.preloaded) {        
-        Promise.all(this.preloadImages('thumbnail')[1]).then(() => {
-          this.preloadedImages = this.preloadImages('image')[0]
-          this.preloaded = true
-        })
-      }
+      // if(!this.preloaded) {        
+      //   Promise.all(this.preloadImages('thumbnail')[1]).then(() => {
+      //     this.preloadedImages = this.preloadImages('image')[0]
+      //     this.preloaded = true
+      //   })
+      // }
     }
   },
   created() {

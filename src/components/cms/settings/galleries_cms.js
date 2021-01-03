@@ -59,22 +59,30 @@ export default {
       galleries: [],
       selectedGallery: null,
       imageObjects: [],
-      imageIndex: 0
+      imageIndex: 0,
+      settingsSaving: false,
+      deleteQuestionDialog: false
     }
   },
   async mounted() {
     await this.db.collection('galleries').get().then(async galleriesDocs => {
-      for (let i = 0; i < galleriesDocs.docs.length; i++) {
-        let doc = galleriesDocs.docs[i]
+      let docs = galleriesDocs.docs
+      docs.sort((a, b) => {
+        return a.data().order - b.data().order
+      })
+      for (let i = 0; i < docs.length; i++) {
+        let doc = docs[i]
         let galleryObj = {
           name: doc.data().name,
+          order: doc.data().order,
+          hidden: doc.data().hidden,
           images: [],
           ref: doc.ref
         }
         this.galleries.push(galleryObj)
         await doc.ref.collection('images').get().then(imageDocs => {
-          galleryObj.images.push(...imageDocs.docs.map(imageDoc => { return {...imageDoc.data(), ref: imageDoc.ref} }))
-          if(this.$refs.gallery) this.$refs.gallery.forEach(gal => { gal.splitGallery() })
+          galleryObj.images.push(...imageDocs.docs.map(imageDoc => { return { ...imageDoc.data(), ref: imageDoc.ref } }))
+          if (this.$refs.gallery) this.$refs.gallery.forEach(gal => { gal.splitGallery() })
         })
       }
     })
@@ -84,6 +92,41 @@ export default {
       var tmp = array[indexA];
       array[indexA] = array[indexB];
       array[indexB] = tmp;
+    },
+    saveSettings() {
+      this.settingsSaving = true
+      console.log('Saving...')
+      console.log(this.selectedGallery)
+      this.selectedGallery.ref.update({
+        name: this.selectedGallery.name,
+        order: this.selectedGallery.order,
+        hidden: this.selectedGallery.hidden? this.selectedGallery.hidden: false
+      }).then(() => {
+        this.settingsSaving = false
+        console.log('Done!')
+      })
+    },
+    deleteGallery() {
+      if(this.selectedGallery.images && this.selectedGallery.images.length>0) {
+        this.deleteQuestionDialog = true
+      } else {
+        this.selectedGallery.ref.delete().then(() => {
+          this.galleries.splice(this.galleries.indexOf(this.sellectedGallery), 1)
+          this.selectedGallery = null
+        })
+      }
+    },
+    createGallery() {
+      this.selectedGallery = {
+        name: "New gallery",
+        order: this.galleries.length+1,
+        hidden: true,
+        images: []
+      }
+      this.db.collection('galleries').add(this.selectedGallery).then(ref => {
+        this.selectedGallery.ref = ref
+        this.galleries.push(this.selectedGallery)
+      })
     },
     async saveImages() {
       for (let i = 0; i < this.imageObjects.length; i++) {
@@ -139,8 +182,8 @@ export default {
         let imagePromise = this.setHeightAndWidth(image, 0, 'image')
         let lazyPromise = this.setHeightAndWidth(image, 1, 'lazy')
         let thumbnailPromise = this.setHeightAndWidth(image, 2, 'thumbnail')
-        Promise.all([imagePromise, lazyPromise, thumbnailPromise]).then(()=> {
-          let imgObject = {...image}
+        Promise.all([imagePromise, lazyPromise, thumbnailPromise]).then(() => {
+          let imgObject = { ...image }
           delete imgObject.ref
           image.ref.update(imgObject)
           console.log(imgObject, image)
@@ -148,7 +191,7 @@ export default {
       })
     },
     setHeightAndWidth(image, index, key) {
-      return new Promise( resolve => {
+      return new Promise(resolve => {
         const img = new Image();
         img.onload = function () {
           image.height[index] = img.height
