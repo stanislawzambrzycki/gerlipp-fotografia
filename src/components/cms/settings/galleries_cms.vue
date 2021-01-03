@@ -14,13 +14,53 @@
             label="Select gallery"
             return-object
             item-text="name"
-          /> </v-col
-      ></v-row>
+          />
+        </v-col>
+        <v-col cols="2"
+          ><v-btn icon @click="createGallery()"><v-icon>add</v-icon></v-btn></v-col
+        >
+      </v-row>
       <!-- <div data-app></div> -->
+      <transition name="fade">
+        <v-card
+          style="width: 100%"
+          v-if="selectedGallery"
+          elevation="5"
+          class="my-3"
+        >
+          <!-- <v-btn text @click="repairGallery()">Repair gallery</v-btn> -->
+          <v-card-subtitle style="width: 50%; font-size: 1.2rem"
+            >Settings</v-card-subtitle
+          >
+          <v-card-text style="width: 50%">
+            <v-text-field v-model="selectedGallery.name" label="Gallery name" />
+            <v-text-field
+              type="number"
+              v-model="selectedGallery.order"
+              label="Gallery display order"
+            />
+            <div class="d-flex align-center">
+              <v-checkbox
+                label="Hide gallery"
+                v-model="selectedGallery.hidden"
+              />
+              <v-btn icon @click="deleteGallery()"><v-icon>delete</v-icon></v-btn>
+            </div>
+            <v-btn @click="saveSettings()" :loading="settingsSaving"
+              >Save</v-btn
+            >
+          </v-card-text>
+        </v-card>
+      </transition>
 
       <transition name="fade">
-        <v-card style="width: 100%" v-if="selectedGallery" elevation="5" class='my-3'>
-          <v-btn text @click="repairGallery()">Repair gallery</v-btn>
+        <v-card
+          style="width: 100%"
+          v-if="selectedGallery"
+          elevation="5"
+          class="my-3"
+        >
+          <!-- <v-btn text @click="repairGallery()">Repair gallery</v-btn> -->
           <v-card-subtitle style="width: 50%; font-size: 1.2rem"
             >Upload</v-card-subtitle
           >
@@ -41,8 +81,22 @@
           </v-card-text>
         </v-card>
       </transition>
-      <Gallery v-if="imageObjects.length>0" v-bind:gallery="{name: selectedGallery.name, ref: selectedGallery.ref, images:imageObjects}" ref='tmp_gallery' :key='"temporary"+Math.random()' />
-      <Gallery v-if="selectedGallery" v-bind:gallery="selectedGallery" ref='gallery' :key='selectedGallery.name' />
+      <Gallery
+        v-if="imageObjects.length > 0"
+        v-bind:gallery="{
+          name: selectedGallery.name,
+          ref: selectedGallery.ref,
+          images: imageObjects,
+        }"
+        ref="tmp_gallery"
+        :key="'temporary' + Math.random()"
+      />
+      <Gallery
+        v-if="selectedGallery"
+        v-bind:gallery="selectedGallery"
+        ref="gallery"
+        :key="selectedGallery.name"
+      />
       <!-- <v-card
         width="80%"
         height="auto"

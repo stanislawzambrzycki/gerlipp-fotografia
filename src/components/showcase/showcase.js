@@ -40,15 +40,25 @@ export default {
   async mounted() {
     this.preloadImages = []
     this.observer.observe(this.$el);
-    await this.db.collection('galleries').get().then(async galleriesDocs => {
-      for(let i=0; i<galleriesDocs.docs.length; i++) {
+    await this.db.collection('galleries').where('hidden', '!=', true).get().then(async galleriesDocs => {
+      let docs = galleriesDocs.docs
+      docs.sort((a, b) => {
+        return a.data().order - b.data().order
+      })
+      for (let i = 0; i < docs.length; i++) {
         let doc = galleriesDocs.docs[i]
         let galleryObj = {
           name: doc.data().name,
+          order: doc.data().order,
+          hidden: doc.data().hidden,
           images: [],
           ref: doc.ref
         }
         this.galleries.push(galleryObj)
+        this.galleries.sort((a, b) => {
+          return a.order - b.order
+        })
+        console.log(this.galleries)
         await doc.ref.collection('images').get().then(imageDocs => {
           let images = imageDocs.docs.map(imageDoc => { return imageDoc.data() })
           let preload = this.preloadLazyImages(images)
