@@ -15,13 +15,13 @@ export default {
       .collection("contact")
       .get()
       .then((contactCollection) => {
-        this.aboutText = contactCollection.docs[0].data().text;
+        this.contactText = contactCollection.docs[0].data();
       });
   },
   data() {
     return {
       db: firebase.firestore(),
-      aboutText: "",
+      contactText: "",
     };
   },
 };
