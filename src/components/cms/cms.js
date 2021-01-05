@@ -1,8 +1,8 @@
 import mainCMS from "./settings/main_cms.vue";
 import galleriesCMS from "./settings/galleries_cms.vue";
 import menuCMS from "./settings/menu_cms.vue";
-import aboutCMS from "./settings/about_cms.vue";
-import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import editsCMS from "./settings/edits_cms.vue";
+import "material-design-icons-iconfont/dist/material-design-icons.css";
 
 export default {
   name: "CMS",
@@ -10,7 +10,7 @@ export default {
     mainCMS,
     galleriesCMS,
     menuCMS,
-    aboutCMS
+    editsCMS,
   },
 
   data() {
@@ -19,7 +19,7 @@ export default {
       showComponent: {
         main: true,
         galleries: false,
-        about: false
+        about: false,
       },
       showMainSettings: true,
       showGalleries: false,
@@ -31,13 +31,13 @@ export default {
   },
   methods: {
     navigate(to) {
-      if(to!='logout') {
-        Object.keys(this.showComponent).forEach(key => {
-          this.showComponent[key] = to===key
-        })
-        this.toggleMenu()
+      if (to != "logout") {
+        Object.keys(this.showComponent).forEach((key) => {
+          this.showComponent[key] = to === key;
+        });
+        this.toggleMenu();
       } else {
-        console.log('Logging out...')
+        console.log("Logging out...");
       }
     },
     toggleMenu() {
