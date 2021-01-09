@@ -17,7 +17,7 @@
       <transition name="fade" mode="out-in">
         <mainCMS v-if="showComponent.main" />
         <galleriesCMS v-if="showComponent.galleries" />
-        <aboutCMS v-if="showComponent.about" />
+        <editsCMS v-if="showComponent.about" />
       </transition>
     </v-card>
     <!-- </v-card> -->

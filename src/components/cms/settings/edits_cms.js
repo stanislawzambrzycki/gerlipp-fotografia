@@ -3,8 +3,16 @@ import "firebase/firestore";
 import "firebase/app";
 
 export default {
-  name: "aboutCMS",
+  name: "editsCMS",
   created() {
+    this.db
+      .collection("greeting")
+      .get()
+      .then((greetingCollection) => {
+        this.greetingRef = greetingCollection.docs[0].ref;
+        this.greetingText = greetingCollection.docs[0].data();
+      });
+
     this.db
       .collection("about")
       .get()
@@ -25,18 +33,30 @@ export default {
   data() {
     return {
       db: firebase.firestore(),
+      greetingText: { top: "", center: "", bottom: "" },
+      greetingRef: null,
       aboutText: "",
       aboutRef: null,
-      contactText: {phone: "", email: ""},
+      contactText: { phone: "", email: "" },
       contactRef: null,
     };
   },
   methods: {
+    saveGreeting() {
+      this.greetingRef.update({
+        top: this.greetingText.top,
+        center: this.greetingText.center,
+        bottom: this.greetingText.bottom,
+      });
+    },
     saveAbout() {
       this.aboutRef.update({ text: this.aboutText });
     },
     saveContact() {
-      this.contactRef.update({ phone: this.contactText.phone, email: this.contactText.email });
+      this.contactRef.update({
+        phone: this.contactText.phone,
+        email: this.contactText.email,
+      });
     },
   },
 };

@@ -1,11 +1,11 @@
 <template>
   <div class="menu top-right">
     <ul class="menu-nav menu-cms">
-      <li ref="greeting" class="nav-item">
+      <!-- <li ref="greeting" class="nav-item">
         <a href="#" class="nav-link" @click="$emit('navigate', 'main')"
           >Main Settings
         </a>
-      </li>
+      </li> -->
 
       <li ref="showcase" class="nav-item">
         <a href="#" class="nav-link" @click="$emit('navigate', 'galleries')"
@@ -15,7 +15,7 @@
 
       <li ref="showcase" class="nav-item">
         <a href="#" class="nav-link" @click="$emit('navigate', 'about')"
-          >User data
+          >Edits
         </a>
       </li>
 
@@ -28,5 +28,5 @@
   </div>
 </template>
 
-<style src="../../../sass/main.css"> </style>
+<style src="../../../sass/main.css"></style>
 <script src="./menu_cms.js" />
