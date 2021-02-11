@@ -28,7 +28,7 @@
           elevation="5"
           class="my-3"
         >
-          <!-- <v-btn text @click="repairGallery()">Repair gallery</v-btn> -->
+          <v-btn text @click="repairCloseups()">Repair gallery</v-btn>
           <v-card-subtitle style="width: 50%; font-size: 1.2rem"
             >Settings</v-card-subtitle
           >

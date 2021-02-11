@@ -25,15 +25,31 @@ export default {
         image: "",
         show: false,
         index: 0,
+        obj: {likes: 0},
+        hover: false
       },
       storage: firebase.storage().ref()
     }
   },
   methods: {
-    openDialog(image, lazy, index) {
+    toggleLike(image) {
+      this.$store.dispatch('toggleLike', image.ref.id).then(like => {
+        this.gallery.likes = this.$store.getters.likes
+        let change = 0
+        let newValue = 0
+        if(like>-1) change = 1
+        else change = -1
+        if(image.likes !== undefined && image.likes > 0) newValue = image.likes + change
+        else if(change===1) newValue = 1; else newValue = 0;
+        image.ref.update({likes: newValue})
+        image.likes = newValue
+      })
+    },
+    openDialog(image, lazy, index, obj) {
       this.current.image = image
       this.current.lazy = lazy
       this.current.index = index
+      this.current.obj = obj
       this.current.show = true
     },
     preloadImages(type) {
@@ -69,21 +85,23 @@ export default {
       let index = 0
       this.gallery.images.forEach((image, index2) => {
         index = this.splittedHeight.indexOf(Math.min(...this.splittedHeight))
-        tmpSplitted[index].push({ image: image.image, thumbnail: image.thumbnail, lazy: image.lazy, index: index2 })
+        tmpSplitted[index].push({
+          image: image.image, thumbnail: image.thumbnail, lazy: image.lazy,
+          closeup: image.closeup, index: index2, height: image.height[1],
+          width: image.width[1], ref: image.ref, likes: image.likes, hover: false
+        })
         this.splittedHeight[index] = this.splittedHeight[index] + image.height[2]
       })
       this.splitted = tmpSplitted
-      console.log('Gallery '+this.gallery.name+' was splitted!')
-      // if(!this.preloaded) {        
+      // if(!this.preloaded) {
+      //   this.preloaded = true
       //   Promise.all(this.preloadImages('thumbnail')[1]).then(() => {
       //     this.preloadedImages = this.preloadImages('image')[0]
-      //     this.preloaded = true
       //   })
       // }
     }
   },
   created() {
-    console.log(this.gallery)
     window.addEventListener("resize", this.splitGallery);
   },
   destroyed() {

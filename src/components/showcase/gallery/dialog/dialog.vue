@@ -7,8 +7,19 @@
             ><v-icon>mdi-arrow-expand</v-icon></v-btn
           >
 
-          <v-btn icon x-large class="ma-4 mr-auto">
-            <v-icon>favorite_border</v-icon>
+          <v-btn icon x-large class="ma-4 mr-auto" @click="toggleLike()">
+            <v-badge
+              :value="current.hover && current.obj.likes > 0"
+              color="red"
+              :content="current.obj.likes"
+              left
+              transition="slide-x-transition"
+            >
+              <v-hover v-model="current.hover">
+                <v-icon color="red" v-if="inLikes()">favorite</v-icon>
+                <v-icon v-else>favorite_border</v-icon>
+              </v-hover>
+            </v-badge>
           </v-btn>
         </v-col>
         <v-col cols="10" class="d-flex justify-space-between align-center">
@@ -16,15 +27,17 @@
             ><v-icon>mdi-arrow-left</v-icon></v-btn
           >
           <v-sheet height="100vh" width="100%" class="d-flex">
-            <v-img
-              :key='"image"+current.index'
-              :max-height="height"
-              :max-width="width"
-              contain
-              :src="current.image"
-              :lazy-src="current.lazy"
-              class="ma-auto"
-            />
+            <v-fade-transition mode="out-in">
+              <v-img
+                v-if="current.show"
+                :key="'image' + current.index"
+                :max-height="height"
+                :max-width="width"
+                contain
+                :src="current.image"
+                class="ma-auto"
+              />
+            </v-fade-transition>
           </v-sheet>
           <v-btn absolute center right icon x-large @click="next"
             ><v-icon>mdi-arrow-right</v-icon></v-btn
