@@ -17,7 +17,9 @@
           />
         </v-col>
         <v-col cols="2"
-          ><v-btn icon @click="createGallery()"><v-icon>add</v-icon></v-btn></v-col
+          ><v-btn icon @click="createGallery()"
+            ><v-icon>add</v-icon></v-btn
+          ></v-col
         >
       </v-row>
       <!-- <div data-app></div> -->
@@ -25,8 +27,8 @@
         <v-card
           style="width: 100%"
           v-if="selectedGallery"
-          elevation="5"
-          class="my-3"
+          elevation="3"
+          class="my-4"
         >
           <v-btn text @click="repairCloseups()">Repair gallery</v-btn>
           <v-card-subtitle style="width: 50%; font-size: 1.2rem"
@@ -44,7 +46,9 @@
                 label="Hide gallery"
                 v-model="selectedGallery.hidden"
               />
-              <v-btn icon @click="deleteGallery()"><v-icon>delete</v-icon></v-btn>
+              <v-btn icon @click="deleteGallery()"
+                ><v-icon>delete</v-icon></v-btn
+              >
             </div>
             <v-btn @click="saveSettings()" :loading="settingsSaving"
               >Save</v-btn
@@ -57,8 +61,8 @@
         <v-card
           style="width: 100%"
           v-if="selectedGallery"
-          elevation="5"
-          class="my-3"
+          elevation="3"
+          class="my-4"
         >
           <!-- <v-btn text @click="repairGallery()">Repair gallery</v-btn> -->
           <v-card-subtitle style="width: 50%; font-size: 1.2rem"
@@ -120,7 +124,6 @@
 </template>
 
 <script src="./galleries_cms.js" />
-
 
 <style scoped>
 .fade-enter-active,
