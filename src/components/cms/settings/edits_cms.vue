@@ -1,6 +1,6 @@
 <template>
   <v-card width="100%">
-    <v-card width="100%" class="ma-5">
+    <v-card width="auto" class="ma-4">
       <v-card-title> Greeting </v-card-title>
       <v-form>
         <v-container width="100%" class="mx-0">
@@ -35,7 +35,7 @@
         <v-btn text @click="saveGreeting()">Save</v-btn>
       </v-card-actions>
     </v-card>
-    <v-card width="100%" class="ma-5">
+    <v-card width="auto" class="ma-4">
       <v-card-title> About </v-card-title>
       <v-card-text>
         <v-textarea auto-grow clearable full-width outlined v-model="aboutText">
@@ -45,7 +45,7 @@
         <v-btn text @click="saveAbout()">Save</v-btn>
       </v-card-actions>
     </v-card>
-    <v-card width="100%" class="ma-5">
+    <v-card width="auto" class="ma-4">
       <v-card-title> Contact </v-card-title>
       <v-form>
         <v-container width="100%" class="mx-0">
