@@ -12,8 +12,8 @@ export default {
     tabClick(galRefName) {
       let component = this
       new Promise(resolve => {
-        let callback = function() {
-          if(component.$refs[galRefName]) resolve()
+        let callback = function () {
+          if (component.$refs[galRefName]) resolve()
           else setTimeout(callback, 10)
         }
         setTimeout(callback, 10)
@@ -21,16 +21,16 @@ export default {
         component.$refs[galRefName][0].splitGallery()
       })
     },
-    preloadLazyImages(galleryObj) {
-      let images = []      
-      let promises = []      
+    preloadImages(galleryObj, type) {
+      let images = []
+      let promises = []
       galleryObj.forEach(image => {
-        promises.push(new Promise( resolve => {
+        promises.push(new Promise(resolve => {
           let img = new Image();
           img.onload = function () {
             resolve()
           };
-          img.src = image.lazy
+          img.src = image[type]
           images.push(img)
         }))
       })
@@ -38,7 +38,7 @@ export default {
     }
   },
   async mounted() {
-    this.preloadImages = []
+    this.preloadedImages = []
     this.observer.observe(this.$el);
     await this.db.collection('galleries').where('hidden', '!=', true).get().then(async galleriesDocs => {
       let docs = galleriesDocs.docs
@@ -52,19 +52,24 @@ export default {
           order: doc.data().order,
           hidden: doc.data().hidden,
           images: [],
-          ref: doc.ref
+          ref: doc.ref,
+          likes: this.$store.getters.likes
         }
         this.galleries.push(galleryObj)
         this.galleries.sort((a, b) => {
           return a.order - b.order
         })
-        console.log(this.galleries)
         await doc.ref.collection('images').get().then(imageDocs => {
           let images = imageDocs.docs.map(imageDoc => { return imageDoc.data() })
-          let preload = this.preloadLazyImages(images)
-          this.preloadImages.push(preload[0])
-          Promise.all(preload[1]).then(
-            galleryObj.images.push(...imageDocs.docs.map(imageDoc => { return imageDoc.data() }))
+          let preload = this.preloadImages(images, 'lazy')
+          this.preloadedImages.push(preload[0])
+          Promise.all(preload[1]).then(() => {
+            //this.preloadedImages.push(this.preloadImages(images, 'image')[0])
+            galleryObj.images.push(...imageDocs.docs.map(imageDoc => { return {
+              ...imageDoc.data(), ref: imageDoc.ref, likes: imageDoc.data().likes? imageDoc.data().likes: 0
+            } }))
+            galleryObj.images.sort((a, b) => { return a.index - b.index })
+          }
           )
         })
       }
@@ -77,7 +82,7 @@ export default {
     return {
       db: firebase.firestore(),
       tab: null,
-      preloadImages: [],
+      preloadedImages: [],
       galleries: [
       ],
     };

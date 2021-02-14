@@ -3,6 +3,9 @@ import galleriesCMS from "./settings/galleries_cms.vue";
 import menuCMS from "./settings/menu_cms.vue";
 import editsCMS from "./settings/edits_cms.vue";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
+import firebase from "firebase/app";
+import "firebase/firestore"
+import "firebase/auth";
 
 export default {
   name: "CMS",
@@ -16,18 +19,62 @@ export default {
   data() {
     return {
       showCMS: true,
+      user: null,
+      admins: null,
+      db: firebase.firestore(),
       showComponent: {
-        main: true,
-        galleries: false,
+        galleries: true,
         about: false,
       },
-      showMainSettings: true,
-      showGalleries: false,
+      showGalleries: true,
       showMenu: false,
       menubtn: {
         dark: true,
       },
     };
+  },
+  created() {
+    setTimeout(() => { this.$store.dispatch('loginPending', false) }, 30000)
+    this.user = this.$store.getters.user
+    firebase.auth()
+      .getRedirectResult()
+      .then((result) => {
+        console.log(result)
+        if (result.operationType === 'signIn')
+          this.$store.dispatch('login', result.user).then(user => {
+            this.user = user
+            console.log('cms.js logged in', user)
+            this.$store.dispatch('loginPending', false)
+          });
+      })
+    this.db.collection("admins").get().then(adminDocs => {
+      this.admins = adminDocs.docs.map(doc => { return { ...doc.data(), ref: doc.ref } })
+    })
+  },
+  computed: {
+    validUser() {
+      let isLoggedIn = !!this.$store.getters.user
+      let isNotAnonymous = false
+      if (isLoggedIn) isNotAnonymous = !this.$store.getters.user.isAnonymous
+      let adminListCreated = this.admins !== null
+      let userIsAdmin = false
+      if (isLoggedIn && isNotAnonymous && adminListCreated) {
+        userIsAdmin = this.admins.map(admin => { return admin.email }).includes(this.$store.getters.user.email)
+      }
+      return userIsAdmin
+    }
+  },
+  mounted() {
+    setTimeout(() => {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      console.log('cms.js is user set or login pending', this.$store.getters.user, this.$store.getters.loginPending)
+      if (!this.$store.getters.user || this.$store.getters.user.isAnonymous) {
+        if (!this.$store.getters.loginPending)
+          this.$store.dispatch('loginPending', true).then(() => {
+            firebase.auth().signInWithRedirect(provider);
+          })
+      }
+    }, 0)
   },
   methods: {
     navigate(to) {
@@ -38,6 +85,16 @@ export default {
         this.toggleMenu();
       } else {
         console.log("Logging out...");
+        this.$store.dispatch('logout').then(() => {
+          firebase.auth().signOut().then(() => {
+            firebase.auth().signInAnonymously().then(result => {
+              this.$store.dispatch('login', result.user).then(user => {
+                console.log('cms.js anno', user)
+                this.$router.push({ name: 'Home' })
+              });
+            })
+          })
+        })
       }
     },
     toggleMenu() {

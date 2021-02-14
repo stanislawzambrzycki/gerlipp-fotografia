@@ -13,17 +13,30 @@
           v-for="(image, index2) in split"
           :key="image + '' + index2"
         >
-          <v-img
-            class="image"
-            :src="image.thumbnail"
-            :lazy-src="image.lazy"
-          />
-          <v-btn icon dark small absolute bottom left fab class="mb-8"
-            ><v-icon>mdi-arrow-left</v-icon>
-          </v-btn>
-          <v-btn icon dark small absolute bottom right fab class="mb-8"
-            ><v-icon>mdi-arrow-right</v-icon>
-          </v-btn>
+          <div
+            v-on:dragover="allowDrop"
+            v-on:drop="drop"
+            :data-index="image.index"
+          >
+            <div
+              draggable="true"
+              v-on:dragstart="drag"
+              :data-index="image.index"
+            >
+              <v-hover v-slot="{ hover }">
+                <div>
+                  <v-img
+                    :class="hover ? 'cmsImage' : ''"
+                    :src="image.thumbnail"
+                    :lazy-src="image.lazy"
+                  />
+                  <v-btn icon dark small absolute top right fab class="mt-8" @click="deletePhoto(image.parent)">
+                    <v-icon>delete_outline</v-icon>
+                  </v-btn>
+                </div>
+              </v-hover>
+            </div>
+          </div>
         </v-card>
       </v-col>
     </v-row>
@@ -31,3 +44,9 @@
 </template>
 
 <script src="./gallery.js" />
+
+<style scoped>
+.cmsImage {
+  filter: brightness(0.6);
+}
+</style>

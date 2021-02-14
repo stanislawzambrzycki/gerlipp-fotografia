@@ -18,10 +18,33 @@
             class="image"
             :src="image.thumbnail"
             :lazy-src="image.lazy"
-            @click="openDialog(image.image, image.thumbnail, image.index)"
+            @click="openDialog(image.closeup, image.thumbnail, image.index, image)"
           />
-          <v-btn icon dark small absolute bottom left fab class="mb-8">
-            <v-icon>favorite_border</v-icon>
+          <v-btn
+            icon
+            dark
+            small
+            absolute
+            bottom
+            left
+            fab
+            class="mb-8"
+            @click="toggleLike(image)"
+          >
+            <v-badge
+              :value="image.hover && image.likes>0"
+              color="red"
+              :content="image.likes"
+              left
+              transition="slide-x-transition"
+            >
+              <v-hover v-model="image.hover">
+                <v-icon color="red" v-if="gallery.likes.includes(image.ref.id)"
+                  >favorite</v-icon
+                >
+                <v-icon v-else>favorite_border</v-icon>
+              </v-hover>
+            </v-badge>
           </v-btn>
         </v-card>
       </v-col>

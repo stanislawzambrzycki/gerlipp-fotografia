@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-card class="cms pa-0">
+    <v-card class="cms pa-0" v-if="validUser">
       <menuCMS @navigate="navigate($event)" ref="menu" />
 
       <v-btn
@@ -15,7 +15,6 @@
         ><v-icon large>menu</v-icon></v-btn
       >
       <transition name="fade" mode="out-in">
-        <mainCMS v-if="showComponent.main" />
         <galleriesCMS v-if="showComponent.galleries" />
         <editsCMS v-if="showComponent.about" />
       </transition>

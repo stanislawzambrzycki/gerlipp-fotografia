@@ -7,14 +7,16 @@ import 'firebase/storage'
 
 class ImageObject {
   constructor(file) {
+    let promises = []
+    this.createCloseup = true
     this.file = file
     this.thumbnail = null
     this.lazy = null
     this.imageList = []
     this.lengthList = []
     this.compressionList = []
-    this.widthList = []
-    this.heightList = []
+    this.width = []
+    this.height = []
     this.index = 0
     this.ready = new Promise((imageReady) => {
       const reader = new FileReader();
@@ -30,14 +32,49 @@ class ImageObject {
             imgObject.imageList.forEach(image => {
               imgObject.lengthList.push(image.length)
               imgObject.compressionList.push(Math.floor((image.length / imgObject.lengthList[0]) * 100) + "%")
-              const img = new Image();
-              img.onload = function () {
-                imgObject.widthList.push(img.width)
-                imgObject.heightList.push(img.height)
-              };
-              img.src = image;
+              promises.push(new Promise(resolve => {
+                const img = new Image();
+                img.onload = function () {
+                  imgObject.width.push(img.width)
+                  imgObject.height.push(img.height)
+                  resolve([img.width, img.height])
+                };
+                img.src = image;
+
+              }))
             })
-            imageReady(imgObject)
+            Promise.all(promises).then((dims) => {
+              let width = 0
+              let height = 0
+              let scale = true
+              if (dims[0][0] > 1600 && dims[0][0] >= dims[0][1]) width = 1600;
+              else if (dims[0][1] > 1600 && dims[0][0] <= dims[0][1]) height = 1600;
+              else scale = false
+              if (scale) {
+                downscale(imgObject.imageList[0], width, height, { quality: 0.85 }).then(closeup => {
+                  imgObject.closeup = closeup
+                  imgObject.imageList.push(closeup)
+                  imgObject.lengthList.push(closeup.length)
+                  imgObject.compressionList.push(Math.floor((closeup.length / imgObject.lengthList[0]) * 100) + "%")
+                  let loadImage = new Promise(resolve => {
+                    const img = new Image();
+                    img.onload = function () {
+                      imgObject.width.push(img.width)
+                      imgObject.height.push(img.height)
+                      resolve([img.width, img.height])
+                    };
+                    img.src = closeup;
+                  })
+                  loadImage.then(() => {
+                    imageReady(imgObject)
+                  })
+                })
+              }
+              else {
+                imgObject.createCloseup = false
+                imageReady(imgObject)
+              }
+            })
           })
         })
       }, false);
@@ -82,7 +119,14 @@ export default {
         this.galleries.push(galleryObj)
         await doc.ref.collection('images').get().then(imageDocs => {
           galleryObj.images.push(...imageDocs.docs.map(imageDoc => { return { ...imageDoc.data(), ref: imageDoc.ref } }))
-          if (this.$refs.gallery) this.$refs.gallery.forEach(gal => { gal.splitGallery() })
+          galleryObj.images.sort((a, b) => { return a.index - b.index })
+          let dimensions = galleryObj.images.map(image => { return image.width[0] })
+          dimensions.sort((a, b) => { return a - b })
+          console.log(dimensions)
+          if (this.$refs.gallery) {
+            if(this.$refs.gallery.length) this.$refs.gallery.forEach(gal => { gal.splitGallery() })
+            else this.$refs.gallery.splitGallery()
+          }
         })
       }
     })
@@ -95,19 +139,16 @@ export default {
     },
     saveSettings() {
       this.settingsSaving = true
-      console.log('Saving...')
-      console.log(this.selectedGallery)
       this.selectedGallery.ref.update({
         name: this.selectedGallery.name,
         order: this.selectedGallery.order,
-        hidden: this.selectedGallery.hidden? this.selectedGallery.hidden: false
+        hidden: this.selectedGallery.hidden ? this.selectedGallery.hidden : false
       }).then(() => {
         this.settingsSaving = false
-        console.log('Done!')
       })
     },
     deleteGallery() {
-      if(this.selectedGallery.images && this.selectedGallery.images.length>0) {
+      if (this.selectedGallery.images && this.selectedGallery.images.length > 0) {
         this.deleteQuestionDialog = true
       } else {
         this.selectedGallery.ref.delete().then(() => {
@@ -119,7 +160,7 @@ export default {
     createGallery() {
       this.selectedGallery = {
         name: "New gallery",
-        order: this.galleries.length+1,
+        order: this.galleries.length + 1,
         hidden: true,
         images: []
       }
@@ -134,48 +175,54 @@ export default {
         let imageRef = null
         let lazyRef = null
         let thumbnailRef = null
+        let closeupRef = null
         let imgObj = {
           name: image.file.name,
-          height: image.heightList,
-          width: image.widthList,
+          height: image.height,
+          width: image.width,
           index: image.index,
           image: imageRef,
           lazy: lazyRef,
           thumbnail: thumbnailRef,
+          closeup: closeupRef,
         }
         this.selectedGallery.ref.collection('images').add(imgObj).then(ref => {
           this.selectedGallery.images.push(imgObj)
-          console.log(ref)
           imageRef = this.storage.child('images/' + image.file.name).putString(image.imageList[0], 'data_url').then(async snapshot => {
             let url = await snapshot.ref.getDownloadURL()
-            console.log(url, 'image')
-            ref.update({ image: url })
+            if (image.createCloseup) ref.update({ image: url })
+            else {
+              ref.update({ image: url, closeup: url })
+              imgObj.closeup = url
+            }
             imgObj.image = url
           })
           lazyRef = this.storage.child('lazy/' + image.file.name).putString(image.imageList[1], 'data_url').then(async snapshot => {
             let url = await snapshot.ref.getDownloadURL()
-            console.log(url, 'lazy')
             ref.update({ lazy: url })
             imgObj.lazy = url
           })
           thumbnailRef = this.storage.child('thumbnails/' + image.file.name).putString(image.imageList[2], 'data_url').then(async snapshot => {
             let url = await snapshot.ref.getDownloadURL()
-            console.log(url, 'thumbnail')
             ref.update({ thumbnail: url })
             imgObj.thumbnail = url
           })
+          if (image.createCloseup) {
+            closeupRef = this.storage.child('closeups/' + image.file.name).putString(image.imageList[3], 'data_url').then(async snapshot => {
+              let url = await snapshot.ref.getDownloadURL()
+              ref.update({ closeup: url })
+              imgObj.closeup = url
+            })
+          }
         })
       }
     },
     changeImage() {
       if (this.imageIndex === 2) this.imageIndex = 0;
       else this.imageIndex++
-      console.log(this.imageIndex)
     },
     repairGallery() {
-      console.log(this.selectedGallery)
       this.selectedGallery.images.forEach((image, index) => {
-        console.log(image, index)
         image.index = index
         image.height = [0, 0, 0]
         image.width = [0, 0, 0]
@@ -186,8 +233,59 @@ export default {
           let imgObject = { ...image }
           delete imgObject.ref
           image.ref.update(imgObject)
-          console.log(imgObject, image)
         })
+      })
+    },
+    repairCloseups() {
+      let progress = 0
+      this.selectedGallery.images.forEach((image, index) => {
+        image.closeup = null
+        let width = 0
+        let height = 0
+        let scale = true
+        if (image.width[0] > 1600 && image.width[0] >= image.height[0]) width = 1600;
+        else if (image.height[0] > 1600 && image.width[0] <= image.height[0]) height = 1600;
+        else scale = false
+        if (scale) {
+          let loadOriginalImage = new Promise(resolve => {
+            const originalImage = new Image()
+            originalImage.crossOrigin = "Anonymous";
+            originalImage.onload = function () {
+              resolve(originalImage)
+            };
+            originalImage.src = image.image;
+          })
+          loadOriginalImage.then(originalImage => {
+            downscale(originalImage, width, height, { quality: 0.85 }).then(closeup => {
+              let loadImage = new Promise(resolve => {
+                const img = new Image();
+                img.onload = function () {
+                  image.width.push(img.width)
+                  image.height.push(img.height)
+                  resolve(closeup)
+                };
+                img.src = closeup;
+              })
+              loadImage.then(closeup => {
+                this.storage.child('closeups/' + image.name).putString(closeup, 'data_url').then(async snapshot => {
+                  let url = await snapshot.ref.getDownloadURL()
+                  image.ref.update({ closeup: url }).then(() => {
+                    progress += 1/this.selectedGallery.images.length
+                    console.log(progress, (index+1)+"/"+this.selectedGallery.images.length)
+                  })
+                  image.closeup = url
+                })
+              })
+            })
+          })
+        }
+        else {
+          image.ref.update({ closeup: image.image }).then(() => {
+            progress += 1/this.selectedGallery.images.length
+            console.log(progress, (index+1)+"/"+this.selectedGallery.images.length)
+          })
+          image.closeup = image.image
+        }
       })
     },
     setHeightAndWidth(image, index, key) {
@@ -203,12 +301,10 @@ export default {
     },
     eventHandler(images) {
       this.imageObjects = []
-      console.log(images)
       images.forEach(image => {
         new ImageObject(image).ready.then((imageObj) => {
           this.imageObjects.push(imageObj)
           imageObj.index = this.selectedGallery.images.length + this.imageObjects.length - 2
-          console.log(this.imageObjects)
         })
       })
     },

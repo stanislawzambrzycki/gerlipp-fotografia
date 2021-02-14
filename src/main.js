@@ -11,6 +11,7 @@ import router from './router'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 Vue.use(MagicGrid);
+document.title = "Piotr Gerlipp Photography"
 
 
 
@@ -24,17 +25,15 @@ new Vue({
   store,
   render: (h) => h(App),
   router,
-
   beforeMount() {
     firebase.initializeApp(config);
-    firebase.auth().signInAnonymously()
-  .then(() => {
-    // Signed in..
-  })
-  // .catch((error) => {
-  //   var errorCode = error.code;
-  //   var errorMessage = error.message;
-  //   // ...
-  // })
+    console.log('main.js', this.$store.getters.user)
+    if (!this.$store.getters.loginPending)
+      if (!this.$store.getters.user)
+        firebase.auth().signInAnonymously().then(result => {
+          this.$store.dispatch('login', result.user).then(user => {
+            console.log('main.js anno', user)
+          });
+        })
   }
 }).$mount("#app");
