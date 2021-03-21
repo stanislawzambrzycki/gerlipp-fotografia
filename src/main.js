@@ -9,8 +9,11 @@ import "firebase/auth";
 import { config } from "./config/firebaseConfig";
 import router from './router'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import VueCroppie from 'vue-croppie';
+import 'croppie/croppie.css'
 
 Vue.use(MagicGrid);
+Vue.use(VueCroppie);
 document.title = "Piotr Gerlipp Photography"
 
 

@@ -6,6 +6,7 @@ export default {
   name: "Gallery",
   props: {
     gallery: Object,
+    uploadImages: Array
   },
   data() {
     return {
@@ -15,15 +16,15 @@ export default {
       preloaded: false,
       //prefferedWidth: 500,
       widthBreakpoints: [
-        {width: 1600, preffered: 4},
-        {width: 1000, preffered: 3},
-        {width: 800, preffered: 1}
+        { width: 1600, preffered: 4 },
+        { width: 1000, preffered: 3 },
+        { width: 800, preffered: 1 }
       ],
       current: {
         image: "",
         show: false,
         index: 0,
-      },      
+      },
       storage: firebase.storage().ref()
     }
   },
@@ -35,10 +36,10 @@ export default {
       this.current.show = true
     },
     preloadImages(type) {
-      let images = []      
-      let promises = []      
+      let images = []
+      let promises = []
       this.gallery.images.forEach(image => {
-        promises.push(new Promise( resolve => {
+        promises.push(new Promise(resolve => {
           let img = new Image();
           img.onload = function () {
             resolve()
@@ -50,33 +51,39 @@ export default {
       return [images, promises]
     },
     getBreakPoint() {
-      for(let i = 0; i<this.widthBreakpoints.length; i++) {
-        if(this.$el.clientWidth>=this.widthBreakpoints[i].width) return this.widthBreakpoints[i].preffered
+      for (let i = 0; i < this.widthBreakpoints.length; i++) {
+        if (this.$el.clientWidth >= this.widthBreakpoints[i].width) return this.widthBreakpoints[i].preffered
       }
       return 1
     },
     deletePhoto(image) {
-      console.log(image)
-      let list = ['images/', 'lazy/', 'closeups/', 'thumbnails/']
-      list.forEach(folder => {
-        let child = this.storage.child(folder+image.name)
-        child.delete().then(() => {
-          console.log(folder+image.name+" deleted sucessfully")
-        }).catch((error) => {
-          console.log(error)
-        });
-      })
-      image.ref.delete().then(() => {
-        console.log(image.name+" deleted sucessfully from db")
-      })
-      this.gallery.images = this.gallery.images.filter(item => {return item.name !== image.name})
+      if (image.ready) {
+        this.$emit('deletePhoto', image)
+      } else {
+        let list = ['images/', 'lazy/', 'closeups/', 'thumbnails/']
+        list.forEach(folder => {
+          if (folder !== 'closeups/' || (folder === 'closeups/' && image.closeup)) {
+            let child = this.storage.child(folder + image.name)
+            child.delete().then(() => {
+              console.log(folder + image.name + " deleted sucessfully")
+            }).catch((error) => {
+              console.log(error)
+            });
+          }
+        })
+        image.ref.delete().then(() => {
+          console.log(image.name + " deleted sucessfully from db")
+        })
+        this.gallery.images = this.gallery.images.filter(item => { return item.name !== image.name })
+      }
+      this.splitGallery()
     },
     allowDrop(ev) {
       ev.preventDefault();
-    },    
+    },
     drag(ev) {
       ev.dataTransfer.setData("index", ev.target.getAttribute('data-index'));
-    },    
+    },
     drop(ev) {
       ev.preventDefault();
       let fromIndex = ev.dataTransfer.getData("index");
@@ -85,13 +92,17 @@ export default {
       let to = this.gallery.images[toIndex]
       from.index = toIndex;
       to.index = fromIndex;
-      let tmpFrom = {...from}
-      let tmpTo = {...to}
-      delete tmpFrom.ref
-      delete tmpTo.ref
-      from.ref.update(tmpFrom)
-      to.ref.update(tmpTo)
-      this.gallery.images.sort((a, b) => {return a.index-b.index})
+      let tmpFrom = { ...from }
+      let tmpTo = { ...to }
+      if (tmpFrom.ref) {
+        delete tmpFrom.ref
+        from.ref.update(tmpFrom)
+      }
+      if (tmpTo.ref) {
+        delete tmpTo.ref
+        to.ref.update(tmpTo)
+      }
+      this.gallery.images.sort((a, b) => { return a.index - b.index })
       this.splitGallery()
     },
     splitGallery() {
@@ -107,6 +118,11 @@ export default {
       this.gallery.images.forEach((image, index2) => {
         index = this.splittedHeight.indexOf(Math.min(...this.splittedHeight))
         tmpSplitted[index].push({ image: image.image, thumbnail: image.thumbnail, lazy: image.lazy, index: index2, parent: image })
+        this.splittedHeight[index] = this.splittedHeight[index] + image.height[2]
+      })
+      this.uploadImages.forEach((image, index2) => {
+        index = this.splittedHeight.indexOf(Math.min(...this.splittedHeight))
+        tmpSplitted[index].push({ image: image.imageList[0], thumbnail: image.thumbnail, lazy: image.lazy, index: index2, parent: image, upload: true })
         this.splittedHeight[index] = this.splittedHeight[index] + image.height[2]
       })
       this.splitted = tmpSplitted

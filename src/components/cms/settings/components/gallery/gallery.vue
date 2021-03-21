@@ -33,6 +33,9 @@
                   <v-btn icon dark small absolute top right fab class="mt-8" @click="deletePhoto(image.parent)">
                     <v-icon>delete_outline</v-icon>
                   </v-btn>
+                  <v-btn icon dark small absolute top right fab class="mt-16" @click="$emit('setHomepageImage', image.parent)">
+                    <v-icon>home</v-icon>
+                  </v-btn>
                 </div>
               </v-hover>
             </div>

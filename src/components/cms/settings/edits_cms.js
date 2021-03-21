@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       db: firebase.firestore(),
-      greetingText: { top: "", center: "", bottom: "" },
+      greetingText: { top: "", center: "", bottom: "", display: true },
       greetingRef: null,
       aboutText: "",
       aboutRef: null,
@@ -43,11 +43,7 @@ export default {
   },
   methods: {
     saveGreeting() {
-      this.greetingRef.update({
-        top: this.greetingText.top,
-        center: this.greetingText.center,
-        bottom: this.greetingText.bottom,
-      });
+      this.greetingRef.update(this.greetingText);
     },
     saveAbout() {
       this.aboutRef.update({ text: this.aboutText });
