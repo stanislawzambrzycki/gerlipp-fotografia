@@ -1,5 +1,6 @@
 import downscale from "downscale"
-import Gallery from "./gallery.vue";
+import Gallery from "./components/gallery/gallery.vue";
+import HomepageDialog from "./components/homepageDialog/dialog.vue";
 import firebase from "firebase"
 import "firebase/firestore"
 import 'firebase/app'
@@ -86,7 +87,7 @@ class ImageObject {
 export default {
   name: "galleries_CMS",
   components: {
-    Gallery
+    Gallery, HomepageDialog
   },
   data() {
     return {
@@ -97,9 +98,28 @@ export default {
       selectedGallery: null,
       imageObjects: [],
       imageIndex: 0,
+      unsaved: false,
       settingsSaving: false,
+      imagesSaving: false,
       deleteQuestionDialog: false
     }
+  },
+  beforeRouteLeave (to, from, next) {
+    // If the form is dirty and the user did not confirm leave,
+    // prevent losing unsaved changes by canceling navigation
+    if (this.confirmStayInDirtyForm()){
+      next(false)
+    } else {
+      // Navigate to next view
+      next()
+    }
+  },
+  created() {
+    window.addEventListener('beforeunload', this.beforeWindowUnload)
+  },
+  
+  beforeDestroy() {
+    window.removeEventListener('beforeunload', this.beforeWindowUnload)
   },
   async mounted() {
     await this.db.collection('galleries').get().then(async galleriesDocs => {
@@ -132,6 +152,22 @@ export default {
     })
   },
   methods: {
+    confirmLeave() {
+      return window.confirm('Do you really want to leave? You have unsaved changes!')
+    },
+  
+    confirmStayInDirtyForm() {
+      return this.imageObjects.length > 0 && !this.confirmLeave()
+    },
+  
+    beforeWindowUnload(e) {
+      if (this.confirmStayInDirtyForm()) {
+        // Cancel the event
+        e.preventDefault()
+        // Chrome requires returnValue to be set
+        e.returnValue = ''
+      }   
+    },
     swapElement(array, indexA, indexB) {
       var tmp = array[indexA];
       array[indexA] = array[indexB];
@@ -152,7 +188,7 @@ export default {
         this.deleteQuestionDialog = true
       } else {
         this.selectedGallery.ref.delete().then(() => {
-          this.galleries.splice(this.galleries.indexOf(this.sellectedGallery), 1)
+          this.galleries.splice(this.galleries.indexOf(this.selectedGallery), 1)
           this.selectedGallery = null
         })
       }
@@ -170,6 +206,8 @@ export default {
       })
     },
     async saveImages() {
+      this.imagesSaving = true
+      let promises = []
       for (let i = 0; i < this.imageObjects.length; i++) {
         let image = this.imageObjects[i]
         let imageRef = null
@@ -186,7 +224,7 @@ export default {
           thumbnail: thumbnailRef,
           closeup: closeupRef,
         }
-        this.selectedGallery.ref.collection('images').add(imgObj).then(ref => {
+        let addProm = this.selectedGallery.ref.collection('images').add(imgObj).then(ref => {
           this.selectedGallery.images.push(imgObj)
           imageRef = this.storage.child('images/' + image.file.name).putString(image.imageList[0], 'data_url').then(async snapshot => {
             let url = await snapshot.ref.getDownloadURL()
@@ -213,9 +251,21 @@ export default {
               ref.update({ closeup: url })
               imgObj.closeup = url
             })
+            promises.push(closeupRef)
           }
+          promises.push(imageRef, lazyRef, thumbnailRef)
         })
+        promises.push(addProm)
       }
+      Promise.all(promises).then(() => {
+        this.imageObjects.forEach(image => {
+          this.selectedGallery.images.push(image)
+        })
+        this.imageObjects = []
+        this.unsaved = this.imageObjects.length > 0
+        this.imagesSaving = false
+        this.$refs.gallery.splitGallery()
+      })
     },
     changeImage() {
       if (this.imageIndex === 2) this.imageIndex = 0;
@@ -301,12 +351,25 @@ export default {
     },
     eventHandler(images) {
       this.imageObjects = []
+      this.imagesSaving = true
+      let promises = []
       images.forEach(image => {
-        new ImageObject(image).ready.then((imageObj) => {
+        let img = new ImageObject(image)
+        promises.push(img.ready)
+        img.ready.then((imageObj) => {
           this.imageObjects.push(imageObj)
+          this.unsaved = this.imageObjects.length > 0
           imageObj.index = this.selectedGallery.images.length + this.imageObjects.length - 2
         })
       })
+      Promise.all(promises).then(() => {
+        this.imagesSaving = false
+        this.$refs.gallery.splitGallery()
+      })
+    },
+    deletePhoto(image) {
+      this.imageObjects.splice(this.imageObjects.indexOf(image), 1)
+      this.files = this.files.filter(obj => obj !== image.file)
     },
   }
 };

@@ -77,48 +77,24 @@
               clearable
               v-model="files"
               @change="eventHandler"
-              @click:clear="imageObjects = []"
+              @click:clear="imageObjects = [], files = []"
             ></v-file-input>
-            <v-btn v-if="imageObjects.length > 0" @click="saveImages()"
+            <v-btn v-if="unsaved" @click="saveImages()" :disabled='imagesSaving' :loading='imagesSaving'
               >Save</v-btn
             >
           </v-card-text>
         </v-card>
       </transition>
       <Gallery
-        v-if="imageObjects.length > 0"
-        v-bind:gallery="{
-          name: selectedGallery.name,
-          ref: selectedGallery.ref,
-          images: imageObjects,
-        }"
-        ref="tmp_gallery"
-        :key="'temporary' + Math.random()"
-      />
-      <Gallery
         v-if="selectedGallery"
         v-bind:gallery="selectedGallery"
+        v-bind:uploadImages="imageObjects"
+        @setHomepageImage="$refs.homepageDialog.show($event)"
+        @deletePhoto="deletePhoto"
         ref="gallery"
         :key="selectedGallery.name"
       />
-      <!-- <v-card
-        width="80%"
-        height="auto"
-        style="margin: 16px"
-        v-for="(image, index) in imageObjects"
-        :key="index + 'lowRes'"
-      >
-        <v-img
-          :class="imageIndex === 1 ? 'image-blur ma-0' : 'ma-0'"
-          width="100%"
-          contain
-          :src="image.imageList[imageIndex]"
-          @click="changeImage()"
-        />
-        <v-btn icon dark small absolute bottom left fab class="mb-8">
-          <v-icon>favorite_border</v-icon>
-        </v-btn>
-      </v-card> -->
+      <HomepageDialog ref="homepageDialog"/>
     </v-card-text>
   </v-card>
 </template>

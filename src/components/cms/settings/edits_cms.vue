@@ -7,7 +7,7 @@
           <v-row>
             <v-col cols="12" md="4">
               <v-text-field
-                v-model="contactText.top"
+                v-model="greetingText.top"
                 label="Top"
                 required
               ></v-text-field>
@@ -15,7 +15,7 @@
 
             <v-col cols="12" md="4">
               <v-text-field
-                v-model="contactText.center"
+                v-model="greetingText.center"
                 label="Center"
                 required
               ></v-text-field>
@@ -23,10 +23,16 @@
 
             <v-col cols="12" md="4">
               <v-text-field
-                v-model="contactText.bottom"
+                v-model="greetingText.bottom"
                 label="Bottom"
                 required
               ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="4">
+              <v-checkbox v-model="greetingText.display" label="Display home image">
+              </v-checkbox>
             </v-col>
           </v-row>
         </v-container>
