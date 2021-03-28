@@ -226,7 +226,8 @@ export default {
         }
         let addProm = this.selectedGallery.ref.collection('images').add(imgObj).then(ref => {
           this.selectedGallery.images.push(imgObj)
-          imageRef = this.storage.child('images/' + image.file.name).putString(image.imageList[0], 'data_url').then(async snapshot => {
+          let newName = this.randomizeName(image.file.name)
+          imageRef = this.storage.child('images/' + newName).putString(image.imageList[0], 'data_url').then(async snapshot => {
             let url = await snapshot.ref.getDownloadURL()
             if (image.createCloseup) ref.update({ image: url })
             else {
@@ -235,18 +236,18 @@ export default {
             }
             imgObj.image = url
           })
-          lazyRef = this.storage.child('lazy/' + image.file.name).putString(image.imageList[1], 'data_url').then(async snapshot => {
+          lazyRef = this.storage.child('lazy/' + newName).putString(image.imageList[1], 'data_url').then(async snapshot => {
             let url = await snapshot.ref.getDownloadURL()
             ref.update({ lazy: url })
             imgObj.lazy = url
           })
-          thumbnailRef = this.storage.child('thumbnails/' + image.file.name).putString(image.imageList[2], 'data_url').then(async snapshot => {
+          thumbnailRef = this.storage.child('thumbnails/' + newName).putString(image.imageList[2], 'data_url').then(async snapshot => {
             let url = await snapshot.ref.getDownloadURL()
             ref.update({ thumbnail: url })
             imgObj.thumbnail = url
           })
           if (image.createCloseup) {
-            closeupRef = this.storage.child('closeups/' + image.file.name).putString(image.imageList[3], 'data_url').then(async snapshot => {
+            closeupRef = this.storage.child('closeups/' + newName).putString(image.imageList[3], 'data_url').then(async snapshot => {
               let url = await snapshot.ref.getDownloadURL()
               ref.update({ closeup: url })
               imgObj.closeup = url
@@ -266,6 +267,14 @@ export default {
         this.imagesSaving = false
         this.$refs.gallery.splitGallery()
       })
+    },
+    randomizeName(realName){
+      const length = 20
+      const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+      var result = '';
+      for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+      result += realName.split(".")[1]
+      return result;
     },
     changeImage() {
       if (this.imageIndex === 2) this.imageIndex = 0;

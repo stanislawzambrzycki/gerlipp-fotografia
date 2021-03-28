@@ -13,6 +13,13 @@ export default {
             likeHover: false
         }
     },
+    computed: {
+        computedHeight(){
+            console.log(this.full)
+            if(this.full) return "calc(100% - 2px)"
+            else return "100%"
+        },
+    },
     methods: {
         inLikes() {
             let returnValue = false
