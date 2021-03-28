@@ -14,7 +14,7 @@
                   width="50%"
                   :items="galleries"
                   v-model="selectedGallery"
-                  label="Select gallery"
+                  label="Wybierz galerię"
                   return-object
                   item-text="name"
                 />
@@ -47,7 +47,7 @@
           <v-tooltip right>
             <template v-slot:activator="{ on, attrs }">
               <span v-bind="attrs" v-on="on">
-                <v-btn text @click="repairCloseups()"
+                <v-btn v-if="false" text @click="repairCloseups()"
                   >Repair gallery</v-btn
                 ></span
               >
@@ -58,7 +58,7 @@
           <v-card-subtitle style="width: 50%; font-size: 1.2rem"
             ><v-tooltip right>
               <template v-slot:activator="{ on, attrs }">
-                <span v-bind="attrs" v-on="on">Settings</span>
+                <span v-bind="attrs" v-on="on">Ustawienia galerii</span>
               </template>
               <span>Edycja galerii</span>
             </v-tooltip></v-card-subtitle
@@ -69,7 +69,7 @@
                 <span v-bind="attrs" v-on="on">
                   <v-text-field
                     v-model="selectedGallery.name"
-                    label="Gallery name"
+                    label="Nazwa galerii"
                   />
                 </span>
               </template>
@@ -81,7 +81,7 @@
                   <v-text-field
                     type="number"
                     v-model="selectedGallery.order"
-                    label="Gallery display order"
+                    label="Kolejność wyświetlania galerii"
                   />
                 </span>
               </template>
@@ -92,7 +92,7 @@
                 <template v-slot:activator="{ on, attrs }">
                   <span v-bind="attrs" v-on="on">
                     <v-checkbox
-                      label="Hide gallery"
+                      label="Ukryj galerię"
                       v-model="selectedGallery.hidden"
                     />
                   </span>
@@ -114,7 +114,7 @@
               <template v-slot:activator="{ on, attrs }">
                 <span v-bind="attrs" v-on="on">
                   <v-btn @click="saveSettings()" :loading="settingsSaving"
-                    >Save</v-btn
+                    >Zapisz</v-btn
                   >
                 </span>
               </template>
@@ -135,7 +135,7 @@
           <v-card-subtitle style="width: 50%; font-size: 1.2rem"
             ><v-tooltip right>
               <template v-slot:activator="{ on, attrs }">
-                <span v-bind="attrs" v-on="on">Upload</span>
+                <span v-bind="attrs" v-on="on">Zawartość galerii</span>
               </template>
               <span>Edycja zawartości galerii</span>
             </v-tooltip>
@@ -146,7 +146,7 @@
                 <span v-bind="attrs" v-on="on">
                   <v-file-input
                     accept="image/*"
-                    label="File input"
+                    label="Dodaj zdjęcie"
                     small-chips
                     multiple
                     clearable
@@ -166,7 +166,7 @@
                     @click="saveImages()"
                     :disabled="imagesSaving"
                     :loading="imagesSaving"
-                    >Save</v-btn
+                    >Zapisz</v-btn
                   >
                 </span>
               </template>

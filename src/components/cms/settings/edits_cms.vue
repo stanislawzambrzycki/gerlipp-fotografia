@@ -4,7 +4,7 @@
       <v-card-title>
         <v-tooltip right>
           <template v-slot:activator="{ on, attrs }">
-            <span v-bind="attrs" v-on="on">Greeting</span>
+            <span v-bind="attrs" v-on="on">Powitanie</span>
           </template>
           <span>Edycja elementów nagłówka strony</span>
         </v-tooltip>
@@ -19,7 +19,7 @@
                   <span v-bind="attrs" v-on="on">
                     <v-text-field
                       v-model="greetingText.top"
-                      label="Top"
+                      label="Text góra"
                       required
                     ></v-text-field>
                   </span>
@@ -34,7 +34,7 @@
                   <span v-bind="attrs" v-on="on">
                     <v-text-field
                       v-model="greetingText.center"
-                      label="Center"
+                      label="Text centrum"
                       required
                     ></v-text-field>
                   </span>
@@ -49,7 +49,7 @@
                   <span v-bind="attrs" v-on="on">
                     <v-text-field
                       v-model="greetingText.bottom"
-                      label="Bottom"
+                      label="Text dół"
                       required
                     ></v-text-field>
                   </span>
@@ -65,7 +65,7 @@
                   <span v-bind="attrs" v-on="on">
                     <v-checkbox
                       v-model="greetingText.display"
-                      label="Display home image"
+                      label="Wyswietl obrazek tła"
                     >
                     </v-checkbox>
                   </span>
@@ -80,7 +80,7 @@
         <v-tooltip top>
           <template v-slot:activator="{ on, attrs }">
             <span v-bind="attrs" v-on="on">
-              <v-btn text @click="saveGreeting()">Save</v-btn>
+              <v-btn text @click="saveGreeting()">Zapisz</v-btn>
             </span>
           </template>
           <span>Kliknij by zapisać zmiany</span>
@@ -91,7 +91,7 @@
       <v-card-title>
         <v-tooltip right>
           <template v-slot:activator="{ on, attrs }">
-            <span v-bind="attrs" v-on="on">About</span>
+            <span v-bind="attrs" v-on="on">O mnie</span>
           </template>
           <span>Kliknij by edytować sekcję "O mnie"</span>
         </v-tooltip>
@@ -104,7 +104,7 @@
         <v-tooltip top>
           <template v-slot:activator="{ on, attrs }">
             <span v-bind="attrs" v-on="on"
-              ><v-btn text @click="saveAbout()">Save</v-btn>
+              ><v-btn text @click="saveAbout()">Zapisz</v-btn>
             </span>
           </template>
           <span>Kliknij by zapisać zmiany</span>
@@ -115,7 +115,7 @@
       <v-card-title>
         <v-tooltip right>
           <template v-slot:activator="{ on, attrs }">
-            <span v-bind="attrs" v-on="on">Contact</span>
+            <span v-bind="attrs" v-on="on">Kontakt</span>
           </template>
           <span>Edycja sekcji "Kontakt"</span>
         </v-tooltip>
@@ -124,12 +124,12 @@
         <v-container width="100%" class="mx-0">
           <v-row>
             <v-col cols="12" md="4">
-              <v-tooltip right>
+              <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
                   <span v-bind="attrs" v-on="on">
                     <v-text-field
                       v-model="contactText.phone"
-                      label="Phone"
+                      label="Telefon kontaktowy"
                       required
                     ></v-text-field>
                   </span>
@@ -139,12 +139,12 @@
             </v-col>
 
             <v-col cols="12" md="4">
-              <v-tooltip right>
+              <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
                   <span v-bind="attrs" v-on="on">
                     <v-text-field
                       v-model="contactText.email"
-                      label="E-mail"
+                      label="Adres mailowy"
                       required
                     ></v-text-field>
                   </span>
@@ -159,7 +159,7 @@
         <v-tooltip top>
           <template v-slot:activator="{ on, attrs }">
             <span v-bind="attrs" v-on="on">
-              <v-btn text @click="saveContact()">Save</v-btn>
+              <v-btn text @click="saveContact()">Zapisz</v-btn>
             </span>
           </template>
           <span>Kliknij by zapisać zmiany</span>
