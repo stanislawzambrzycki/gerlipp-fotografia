@@ -9,19 +9,19 @@
 
       <li ref="showcase" class="nav-item">
         <a href="#" class="nav-link" @click="$emit('navigate', 'galleries')"
-          >Galleries
+          >Galerie
         </a>
       </li>
 
       <li ref="showcase" class="nav-item">
         <a href="#" class="nav-link" @click="$emit('navigate', 'about')"
-          >Edits
+          >Ustawienia
         </a>
       </li>
 
       <li ref="about" class="nav-item">
         <a href="#" class="nav-link" @click="$emit('navigate', 'logout')"
-          >Logout
+          >Wyloguj
         </a>
       </li>
     </ul>
