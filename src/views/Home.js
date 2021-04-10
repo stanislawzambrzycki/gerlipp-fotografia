@@ -1,7 +1,7 @@
-import VueScrollTo  from "vue-scrollto";
+import VueScrollTo from "vue-scrollto";
 import firebase from "firebase/app";
 import "firebase/firestore";
-import 'firebase/storage';
+import "firebase/storage";
 
 import About from "../components/about/about.vue";
 import Contact from "../components/contact/contact.vue";
@@ -27,9 +27,10 @@ export default {
       showMenu: false,
       observer: null,
       menubtn: {
-        dark: true
+        dark: true,
       },
       greetingIntersect: false,
+      scrollListener: null,
       db: firebase.firestore(),
     };
   },
@@ -37,27 +38,27 @@ export default {
     this.observer.disconnect();
   },
   created() {
-    this.observer = new IntersectionObserver(
-      this.onElementObserved,
-      {
-        root: this.$el,
-        threshold: 0,
-      }
+    this.observer = new IntersectionObserver(this.onElementObserved, {
+      root: this.$el,
+      threshold: 0,
+    });
+    this.scrollListener = window.addEventListener(
+      "scroll",
+      this.scrollCallback
     );
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     navigate(to) {
-      VueScrollTo.scrollTo(this.$refs[to].$el)
+      VueScrollTo.scrollTo(this.$refs[to].$el);
     },
     onElementObserved(entries) {
       entries.forEach(({ target, isIntersecting }) => {
-        const name = target.getAttribute("data-name")
-        this.$refs.menu.toggleClass(isIntersecting, name)
-        if(name==='greeting') { 
-          this.greetingIntersect = isIntersecting
-          this.menubtn.dark = isIntersecting || this.showMenu
+        const name = target.getAttribute("data-name");
+        this.$refs.menu.toggleClass(isIntersecting, name);
+        if (name === "greeting") {
+          this.greetingIntersect = isIntersecting;
+          this.menubtn.dark = isIntersecting || this.showMenu;
         }
       });
     },
@@ -88,8 +89,15 @@ export default {
 
         // Reset Contact State
         this.showContact = false;
-        this.menubtn.dark = this.greetingIntersect
+        this.menubtn.dark = this.greetingIntersect;
       }
+    },
+
+    scrollCallback() {
+      const target = document.querySelector(".scroll");
+
+      var pos = window.pageYOffset * target.dataset.rate;
+      target.style.transform = "translate3d(0px," + pos + "px, 0px)";
     },
   },
 };
