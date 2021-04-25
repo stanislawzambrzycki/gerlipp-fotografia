@@ -50,15 +50,20 @@ export default {
   mounted() {},
   methods: {
     navigate(to) {
-      VueScrollTo.scrollTo(this.$refs[to].$el);
+      let instance = this
+      VueScrollTo.scrollTo(this.$refs[to].$el, {
+        onDone: () => {
+          setTimeout(() => { if (instance.showMenu) instance.toggleMenu() }, 100)
+        }
+      })
     },
     onElementObserved(entries) {
       entries.forEach(({ target, isIntersecting }) => {
-        const name = target.getAttribute("data-name");
-        this.$refs.menu.toggleClass(isIntersecting, name);
-        if (name === "greeting") {
-          this.greetingIntersect = isIntersecting;
-          this.menubtn.dark = isIntersecting || this.showMenu;
+        const name = target.getAttribute("data-name")
+        this.$refs.menu.toggleClass(isIntersecting, name)
+        if (name === 'greeting') {
+          this.greetingIntersect = isIntersecting
+          this.menubtn.dark = isIntersecting || this.showMenu
         }
       });
     },
