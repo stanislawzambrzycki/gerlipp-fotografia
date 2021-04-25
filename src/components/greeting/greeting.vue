@@ -1,8 +1,8 @@
 <template>
   <div class="greeting" data-name="greeting">
     <v-parallax
-      height="1000"
-      :src="greetingText.display? greetingText.image: null"
+      :height="windowHeight"
+      :src="greetingText.display? greetingText['image'+imageNumber]: null"
     >
       <div class="hello">
         <h1>

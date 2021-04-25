@@ -1,83 +1,87 @@
 .greeting {
   background: black;
 
-  .v-parallax {
-    @include mediaXXl {
-      height: 160vh !important;
-    }
-
-    @include mediaXl {
-      height: 120vh !important;
-    }
-
-    @include mediaLg {
-      height: 920px !important;
-    }
-
-    @include mediaMd {
-      height: 820px !important;
-    }
-
-    @include mediaSm {
-      height: 600px !important;
-    }
-
-    @include mediaXs {
-      height: 420px !important;
-    }
-  }
-  .v-parallax__image-container {
-    opacity: 0.5;
-    width: 100%;
-
-    // @include mediaSm {
-    //   opacity: 0;
-    // }
-
-    // @include mediaXs {
-    //   opacity: 0;
-    // }
 
     .v-parallax__image {
-      background-size: cover;
-      @include mediaXXl {
-        width: 100vw !important;
-        left: 0;
-        top: 0;
-        transform: none !important;
-      }
-
-      @include mediaXl {
-        width: 100%;
-        left: 0;
-        transform: none !important;
-      }
-
-      @include mediaLg {
-        width: 100%;
-        left: 0;
-        transform: none !important;
-      }
-
-      @include mediaMd {
-        width: 100%;
-        left: 0;
-        transform: none !important;
-      }
-
-      @include mediaSm {
-        width: 100%;
-        left: 0;
-        transform: none !important;
-      }
-
-      @include mediaXs {
-        width: 100%;
-        left: 0;
-        transform: none !important;
-      }
+      width: 100vw !important;
     }
-  }
+  // .v-parallax {
+  //   @include mediaXXl {
+  //     height: 160vh !important;
+  //   }
+
+  //   @include mediaXl {
+  //     height: 120vh !important;
+  //   }
+
+  //   @include mediaLg {
+  //     height: 920px !important;
+  //   }
+
+  //   @include mediaMd {
+  //     height: 820px !important;
+  //   }
+
+  //   @include mediaSm {
+  //     height: 600px !important;
+  //   }
+
+  //   @include mediaXs {
+  //     height: 420px !important;
+  //   }
+  // }
+  // .v-parallax__image-container {
+  //   opacity: 0.5;
+  //   width: 100%;
+
+  //   // @include mediaSm {
+  //   //   opacity: 0;
+  //   // }
+
+  //   // @include mediaXs {
+  //   //   opacity: 0;
+  //   // }
+
+  //   .v-parallax__image {
+  //     background-size: cover;
+  //     @include mediaXXl {
+  //       width: 100vw !important;
+  //       left: 0;
+  //       top: 0;
+  //       transform: none !important;
+  //     }
+
+  //     @include mediaXl {
+  //       width: 100%;
+  //       left: 0;
+  //       transform: none !important;
+  //     }
+
+  //     @include mediaLg {
+  //       width: 100%;
+  //       left: 0;
+  //       transform: none !important;
+  //     }
+
+  //     @include mediaMd {
+  //       width: 100%;
+  //       left: 0;
+  //       transform: none !important;
+  //     }
+
+  //     @include mediaSm {
+  //       width: 100%;
+  //       left: 0;
+  //       transform: none !important;
+  //     }
+
+  //     @include mediaXs {
+  //       width: 100%;
+  //       left: 0;
+  //       transform: none !important;
+  //     }
+  //   }
+  // }
 }
 
 .hello {

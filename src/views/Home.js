@@ -1,4 +1,4 @@
-import VueScrollTo  from "vue-scrollto";
+import VueScrollTo from "vue-scrollto";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import 'firebase/storage';
@@ -49,13 +49,18 @@ export default {
   },
   methods: {
     navigate(to) {
-      VueScrollTo.scrollTo(this.$refs[to].$el)
+      let instance = this
+      VueScrollTo.scrollTo(this.$refs[to].$el, {
+        onDone: () => {
+          setTimeout(() => { if (instance.showMenu) instance.toggleMenu() }, 100)
+        }
+      })
     },
     onElementObserved(entries) {
       entries.forEach(({ target, isIntersecting }) => {
         const name = target.getAttribute("data-name")
         this.$refs.menu.toggleClass(isIntersecting, name)
-        if(name==='greeting') { 
+        if (name === 'greeting') {
           this.greetingIntersect = isIntersecting
           this.menubtn.dark = isIntersecting || this.showMenu
         }
