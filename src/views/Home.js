@@ -36,6 +36,10 @@ export default {
   },
   beforeDestroy() {
     this.observer.disconnect();
+    window.removeEventListener(
+      "scroll",
+      this.scrollCallback
+    );
   },
   created() {
     this.observer = new IntersectionObserver(this.onElementObserved, {
@@ -100,9 +104,10 @@ export default {
 
     scrollCallback() {
       const target = document.querySelector(".scroll");
-
-      var pos = window.pageYOffset * target.dataset.rate;
-      target.style.transform = "translate3d(0px," + pos + "px, 0px)";
+      if(target) {
+        var pos = window.pageYOffset * target.dataset.rate;
+        target.style.transform = "translate3d(0px," + pos + "px, 0px)";
+      }
     },
   },
 };
