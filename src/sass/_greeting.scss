@@ -1,98 +1,117 @@
 .greeting {
   background: black;
+  max-height: 100vh !important;
+  max-width: 100vw !important;
+  position: relative;
+  overflow: hidden;
+  .greeting-image {
+    position: absolute;
+    width: 100%;
+  }
 
-
-    .v-parallax__image {
-      width: 100vw !important;
-    }
   // .v-parallax {
-  //   @include mediaXXl {
-  //     height: 160vh !important;
-  //   }
+  //   height: 100% !important;
+  //   max-height: 100vh !important;
+  // @include mediaXXl {
+  //   height: 160vh !important;
+  // }
 
-  //   @include mediaXl {
-  //     height: 120vh !important;
-  //   }
+  // @include mediaXl {
+  //   height: 100vh !important;
+  // }
 
-  //   @include mediaLg {
-  //     height: 920px !important;
-  //   }
+  // @include mediaLg {
+  //   height: 920px !important;
+  // }
 
-  //   @include mediaMd {
-  //     height: 820px !important;
-  //   }
+  // @include mediaMd {
+  //   height: 820px !important;
+  // }
 
-  //   @include mediaSm {
-  //     height: 600px !important;
-  //   }
+  // @include mediaSm {
+  //   height: 600px !important;
+  // }
 
-  //   @include mediaXs {
-  //     height: 420px !important;
-  //   }
+  // @include mediaXs {
+  //   height: 420px !important;
+  // }
   // }
   // .v-parallax__image-container {
   //   opacity: 0.5;
+  //   height: auto;
   //   width: 100%;
 
-  //   // @include mediaSm {
-  //   //   opacity: 0;
-  //   // }
+  // @include mediaSm {
+  //   opacity: 0;
+  // }
 
-  //   // @include mediaXs {
-  //   //   opacity: 0;
-  //   // }
+  // @include mediaXs {
+  //   opacity: 0;
+  // }
 
-  //   .v-parallax__image {
-  //     background-size: cover;
-  //     @include mediaXXl {
-  //       width: 100vw !important;
-  //       left: 0;
-  //       top: 0;
-  //       transform: none !important;
-  //     }
+  // .v-parallax__image {
+  //   background-size: contain;
+  //   @include mediaXXl {
+  //     width: 100vw !important;
+  //     left: 0;
+  //     top: -250px;
+  //     transform: none !important;
+  //   }
 
-  //     @include mediaXl {
-  //       width: 100%;
-  //       left: 0;
-  //       transform: none !important;
-  //     }
+  //   @include mediaXl {
+  //     width: 100%;
+  //     left: 0;
+  //     top: -100px;
+  //     transform: none !important;
+  //   }
 
-  //     @include mediaLg {
-  //       width: 100%;
-  //       left: 0;
-  //       transform: none !important;
-  //     }
+  // @include mediaLg {
+  //   width: 100%;
+  //   left: 0;
 
-  //     @include mediaMd {
-  //       width: 100%;
-  //       left: 0;
-  //       transform: none !important;
-  //     }
+  //   transform: none !important;
+  // }
 
-  //     @include mediaSm {
-  //       width: 100%;
-  //       left: 0;
-  //       transform: none !important;
-  //     }
+  // @include mediaMd {
+  //   width: 100%;
+  //   left: 0;
+  //   transform: none !important;
+  // }
 
-  //     @include mediaXs {
-  //       width: 100%;
-  //       left: 0;
-  //       transform: none !important;
+  // @include mediaSm {
+  //   width: 100%;
+  //   left: 0;
+  //   transform: none !important;
+  // }
+
+  // @include mediaXs {
+  //   width: 100%;
+  //   left: 0;
+  //   transform: none !important;
+  // }
   //     }
   //   }
-  // }
 }
 
 .hello {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 100%;
+  height: 93%;
   margin: 2rem;
   margin-bottom: 1rem;
   box-sizing: border-box;
+  color: aliceblue;
+
+  // @include mediaXs {
+  //   height: 93%;
+  // }
 
   h1,
   h3,
