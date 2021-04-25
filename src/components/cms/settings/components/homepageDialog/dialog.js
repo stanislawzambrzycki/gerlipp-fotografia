@@ -61,7 +61,6 @@ export default {
   watch: {
     // display() {
     //   if(!this.display) this.$refs.croppieRef.refresh()
-    //   console.log(this.display)
     // }
   },
   methods: {
@@ -132,7 +131,6 @@ export default {
             enableOrientation: true,
           }
           let croppieElm = new Croppie(div, croppieOptions)
-          //console.log(zoom, this.initZoom, zoom !== this.initZoom)
           let optionsToPass = {}
           // if (zoom !== this.initZoom)
           optionsToPass = {
@@ -147,11 +145,8 @@ export default {
           //   }
           croppieElm.bind(optionsToPass).then(() => {
             //let options = this.croppieElm.get()
-            //console.log(croppieOptions.boundary, croppieOptions.viewport)
-            //console.log(this.initZoom, options.zoom, zoom, this.lastPoints, options.points)
             // this.initZoom = options.zoom;
             // this.lastPoints = [...options.points]
-            //console.log(this.initZoom, options.zoom, zoom, this.lastPoints, options.points)
           })
           this.croppieElm.push(croppieElm)
         }
@@ -167,9 +162,8 @@ export default {
         circle: false
       }
       for (let index in this.croppieElm) {
-        console.log(index)
         let croppieElm = this.croppieElm[index]
-        console.log(croppieElm.get())
+        croppieElm.get()
         let vm = this
 
         croppieElm.result(options).then(function (output) {
@@ -187,8 +181,8 @@ export default {
     result(output) {
       this.cropped = output;
     },
-    update(val) {
-      console.log(val);
-    },
+    // update(val) {
+    //   console.log(val);
+    // },
   },
 };
