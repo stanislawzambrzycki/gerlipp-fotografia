@@ -31,52 +31,148 @@ export default {
       menubtn: {
         dark: true,
       },
+      authResolved: false,
+      authError: "",
+      unsubscribeAuth: null,
     };
   },
   created() {
     setTimeout(() => { this.$store.dispatch('loginPending', false) }, 30000)
     this.user = this.$store.getters.user
+    this.unsubscribeAuth = firebase.auth().onAuthStateChanged(user => {
+      this.user = user
+      if (user) {
+        this.$store.dispatch('login', user)
+        if (!user.isAnonymous) {
+          this.$store.dispatch('loginPending', false)
+        }
+      } else {
+        this.$store.dispatch('logout')
+      }
+      this.authResolved = true
+    })
     firebase.auth()
       .getRedirectResult()
       .then((result) => {
-        console.log(result)
-        if (result.operationType === 'signIn')
+        if (result && result.operationType === 'signIn' && result.user)
           this.$store.dispatch('login', result.user).then(user => {
             this.user = user
-            console.log('cms.js logged in', user)
             this.$store.dispatch('loginPending', false)
           });
+        else if (firebase.auth().currentUser && !firebase.auth().currentUser.isAnonymous) {
+          this.$store.dispatch('login', firebase.auth().currentUser).then(user => {
+            this.user = user
+          })
+          this.$store.dispatch('loginPending', false)
+        } else {
+          this.$store.dispatch('loginPending', false)
+        }
+      })
+      .catch(error => {
+        this.authError = error && error.message ? error.message : 'Google sign-in could not be completed.'
+        this.$store.dispatch('loginPending', false)
+      })
+      .finally(() => {
+        this.authResolved = true
       })
     this.db.collection("admins").get().then(adminDocs => {
       this.admins = adminDocs.docs.map(doc => { return { ...doc.data(), ref: doc.ref } })
+    }).catch(error => {
+      this.authError = error && error.message ? error.message : 'The admin allowlist could not be loaded.'
+      this.admins = []
     })
   },
+  beforeDestroy() {
+    if (this.unsubscribeAuth) {
+      this.unsubscribeAuth()
+      this.unsubscribeAuth = null
+    }
+  },
   computed: {
+    currentUser() {
+      return this.$store.getters.user
+    },
     validUser() {
-      let isLoggedIn = !!this.$store.getters.user
+      let isLoggedIn = !!this.currentUser
       let isNotAnonymous = false
-      if (isLoggedIn) isNotAnonymous = !this.$store.getters.user.isAnonymous
+      if (isLoggedIn) isNotAnonymous = !this.currentUser.isAnonymous
       let adminListCreated = this.admins !== null
       let userIsAdmin = false
       if (isLoggedIn && isNotAnonymous && adminListCreated) {
-        userIsAdmin = this.admins.map(admin => { return admin.email }).includes(this.$store.getters.user.email)
+        userIsAdmin = this.admins.map(admin => { return admin.email }).includes(this.currentUser.email)
       }
       return userIsAdmin
+    },
+    needsLogin() {
+      return !this.currentUser || this.currentUser.isAnonymous
+    },
+    isResolvingAccess() {
+      return !this.authResolved || this.admins === null
     }
   },
-  mounted() {
-    setTimeout(() => {
-      var provider = new firebase.auth.GoogleAuthProvider();
-      console.log('cms.js is user set or login pending', this.$store.getters.user, this.$store.getters.loginPending)
-      if (!this.$store.getters.user || this.$store.getters.user.isAnonymous) {
-        if (!this.$store.getters.loginPending)
-          this.$store.dispatch('loginPending', true).then(() => {
-            firebase.auth().signInWithRedirect(provider);
-          })
-      }
-    }, 0)
-  },
   methods: {
+    startAdminLogin() {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      provider.setCustomParameters({
+        prompt: 'select_account'
+      })
+      this.authError = ""
+      this.authResolved = false
+      const auth = firebase.auth()
+
+      return this.$store.dispatch('loginPending', true).then(() => {
+        const startPopupLogin = () => auth.signInWithPopup(provider).then(result => {
+          if (result && result.user) {
+            return this.$store.dispatch('login', result.user).then(() => {
+              this.user = result.user
+              this.authResolved = true
+              return this.$store.dispatch('loginPending', false)
+            })
+          }
+
+          this.authResolved = true
+          return this.$store.dispatch('loginPending', false)
+        }).catch(error => {
+          const popupFallbackErrors = [
+            'auth/popup-blocked',
+            'auth/popup-closed-by-user',
+            'auth/cancelled-popup-request',
+            'auth/web-storage-unsupported'
+          ]
+
+          if (popupFallbackErrors.includes(error.code)) {
+            return auth.signInWithRedirect(provider)
+          }
+
+          throw error
+        })
+
+        if (auth.currentUser) {
+          return auth.signOut().then(() => {
+            this.$store.dispatch('logout')
+            return startPopupLogin()
+          })
+        }
+
+        this.$store.dispatch('logout')
+        return startPopupLogin()
+      }).catch(error => {
+        this.authResolved = true
+        this.authError = error && error.message ? error.message : 'Google sign-in could not be started.'
+        return this.$store.dispatch('loginPending', false)
+      })
+    },
+    navigateHome() {
+      this.$router.push({ name: 'Home' })
+    },
+    logoutAndRetry() {
+      this.authError = ""
+      this.$store.dispatch('logout').then(() => {
+        firebase.auth().signOut().finally(() => {
+          this.startAdminLogin()
+        })
+      })
+    },
     navigate(to) {
       if (to != "logout") {
         Object.keys(this.showComponent).forEach((key) => {
@@ -84,12 +180,10 @@ export default {
         });
         this.toggleMenu();
       } else {
-        console.log("Logging out...");
         this.$store.dispatch('logout').then(() => {
           firebase.auth().signOut().then(() => {
             firebase.auth().signInAnonymously().then(result => {
-              this.$store.dispatch('login', result.user).then(user => {
-                console.log('cms.js anno', user)
+              this.$store.dispatch('login', result.user).then(() => {
                 this.$router.push({ name: 'Home' })
               });
             })

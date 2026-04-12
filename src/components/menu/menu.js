@@ -9,7 +9,6 @@ export default {
     toggleClass(isIntersecting, name) {
       if(isIntersecting) this.$refs[name].classList.add('current')
       else this.$refs[name].classList.remove('current')
-      //console.log(name, isIntersecting, this.$refs[name].classList)
     },
     toggleMenu(force = false) {
       let menuBtn = document.querySelector(".menu-btn");

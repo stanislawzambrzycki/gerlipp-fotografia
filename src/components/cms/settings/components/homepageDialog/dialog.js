@@ -36,7 +36,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.commonRatios, this.commonRatios.map(rat => rat.ratio))
     this.croppieElm = []
     this.waitForRef('croppieContainer').then(croppieRefs => {
       for (let croppieRef of croppieRefs) {
@@ -181,8 +180,5 @@ export default {
     result(output) {
       this.cropped = output;
     },
-    // update(val) {
-    //   console.log(val);
-    // },
   },
 };

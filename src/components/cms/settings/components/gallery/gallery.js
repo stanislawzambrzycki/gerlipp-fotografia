@@ -64,16 +64,12 @@ export default {
         list.forEach(folder => {
           if (folder !== 'closeups/' || (folder === 'closeups/' && image.closeup)) {
             let child = this.storage.child(folder + image.name)
-            child.delete().then(() => {
-              console.log(folder + image.name + " deleted sucessfully")
-            }).catch((error) => {
-              console.log(error)
+            child.delete().catch((error) => {
+              console.error(error)
             });
           }
         })
-        image.ref.delete().then(() => {
-          console.log(image.name + " deleted sucessfully from db")
-        })
+        image.ref.delete()
         this.gallery.images = this.gallery.images.filter(item => { return item.name !== image.name })
       }
       this.splitGallery()

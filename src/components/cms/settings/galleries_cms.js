@@ -140,9 +140,6 @@ export default {
         await doc.ref.collection('images').get().then(imageDocs => {
           galleryObj.images.push(...imageDocs.docs.map(imageDoc => { return { ...imageDoc.data(), ref: imageDoc.ref } }))
           galleryObj.images.sort((a, b) => { return a.index - b.index })
-          let dimensions = galleryObj.images.map(image => { return image.width[0] })
-          dimensions.sort((a, b) => { return a - b })
-          console.log(dimensions)
           if (this.$refs.gallery) {
             if(this.$refs.gallery.length) this.$refs.gallery.forEach(gal => { gal.splitGallery() })
             else this.$refs.gallery.splitGallery()
@@ -296,8 +293,7 @@ export default {
       })
     },
     repairCloseups() {
-      let progress = 0
-      this.selectedGallery.images.forEach((image, index) => {
+      this.selectedGallery.images.forEach((image) => {
         image.closeup = null
         let width = 0
         let height = 0
@@ -328,10 +324,7 @@ export default {
               loadImage.then(closeup => {
                 this.storage.child('closeups/' + image.name).putString(closeup, 'data_url').then(async snapshot => {
                   let url = await snapshot.ref.getDownloadURL()
-                  image.ref.update({ closeup: url }).then(() => {
-                    progress += 1/this.selectedGallery.images.length
-                    console.log(progress, (index+1)+"/"+this.selectedGallery.images.length)
-                  })
+                  image.ref.update({ closeup: url })
                   image.closeup = url
                 })
               })
@@ -339,10 +332,7 @@ export default {
           })
         }
         else {
-          image.ref.update({ closeup: image.image }).then(() => {
-            progress += 1/this.selectedGallery.images.length
-            console.log(progress, (index+1)+"/"+this.selectedGallery.images.length)
-          })
+          image.ref.update({ closeup: image.image })
           image.closeup = image.image
         }
       })

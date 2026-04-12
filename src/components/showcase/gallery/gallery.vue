@@ -1,6 +1,15 @@
 <template>
   <v-card class="gallery" width="100%">
-    <v-row no-gutters>
+    <v-alert
+      v-if="gallery.loaded && !gallery.images.length"
+      dense
+      outlined
+      type="warning"
+      class="ma-6"
+    >
+      No photos are currently available in this gallery.
+    </v-alert>
+    <v-row v-else no-gutters>
       <v-col
         v-for="(split, index) in splitted"
         :key="index + 'split'"

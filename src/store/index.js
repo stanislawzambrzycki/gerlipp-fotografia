@@ -6,6 +6,18 @@ import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
+function isValidAuthUser(user) {
+    return Boolean(
+        user &&
+        typeof user === "object" &&
+        (
+            typeof user.uid === "string" ||
+            typeof user.email === "string" ||
+            typeof user.isAnonymous === "boolean"
+        )
+    );
+}
+
 export default new Vuex.Store({
 
     state: {
@@ -18,7 +30,7 @@ export default new Vuex.Store({
             return state.likes
         },        
         user: (state) => {
-            return state.user
+            return isValidAuthUser(state.user) ? state.user : null
         },        
         loginPending: (state) => {
             return state.loginPending
@@ -68,6 +80,8 @@ export default new Vuex.Store({
         }
     },
     modules: {},
-    plugins: [createPersistedState()],
+    plugins: [createPersistedState({
+        paths: ["likes", "loginPending"]
+    })],
 
 });

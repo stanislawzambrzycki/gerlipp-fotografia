@@ -32,6 +32,20 @@ export default {
     }
   },
   methods: {
+    resolveImageSource(image, fields) {
+      for (let i = 0; i < fields.length; i++) {
+        let value = image[fields[i]]
+        if (typeof value === "string" && value.trim()) return value
+      }
+      return ""
+    },
+    getResponsiveValue(values, index, fallback) {
+      if (Array.isArray(values) && values.length > index) {
+        let value = Number(values[index])
+        if (!Number.isNaN(value)) return value
+      }
+      return fallback
+    },
     toggleLike(image) {
       this.$store.dispatch('toggleLike', image.ref.id).then(like => {
         this.gallery.likes = this.$store.getters.likes
@@ -84,13 +98,27 @@ export default {
       }
       let index = 0
       this.gallery.images.forEach((image, index2) => {
+        let displayImage = this.resolveImageSource(image, ["image", "thumbnail", "lazy", "closeup"])
+        let thumbnail = this.resolveImageSource(image, ["thumbnail", "lazy", "image", "closeup"])
+        let lazy = this.resolveImageSource(image, ["lazy", "thumbnail", "image", "closeup"])
+        let closeup = this.resolveImageSource(image, ["closeup", "image", "thumbnail", "lazy"])
+
+        if (!displayImage && !thumbnail && !lazy && !closeup) return
+
         index = this.splittedHeight.indexOf(Math.min(...this.splittedHeight))
         tmpSplitted[index].push({
-          image: image.image, thumbnail: image.thumbnail, lazy: image.lazy,
-          closeup: image.closeup, index: index2, height: image.height[1],
-          width: image.width[1], ref: image.ref, likes: image.likes, hover: false
+          image: displayImage || thumbnail || lazy || closeup,
+          thumbnail: thumbnail || displayImage || lazy || closeup,
+          lazy: lazy || thumbnail || displayImage || closeup,
+          closeup: closeup || displayImage || thumbnail || lazy,
+          index: index2,
+          height: this.getResponsiveValue(image.height, 1, 0),
+          width: this.getResponsiveValue(image.width, 1, 0),
+          ref: image.ref,
+          likes: image.likes,
+          hover: false
         })
-        this.splittedHeight[index] = this.splittedHeight[index] + image.height[2]
+        this.splittedHeight[index] = this.splittedHeight[index] + this.getResponsiveValue(image.height, 2, 0)
       })
       this.splitted = tmpSplitted
       // if(!this.preloaded) {

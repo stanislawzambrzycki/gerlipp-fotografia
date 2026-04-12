@@ -23,7 +23,6 @@ export default {
   methods: {
     resizeHandler() {
       let userRatio = window.innerWidth/window.innerHeight
-      console.log(userRatio)
       let index = 0
       let commonRatio = this.commonRatios[index].ratio
       while(userRatio > commonRatio && index<=this.commonRatios.length-1) {
@@ -32,7 +31,6 @@ export default {
       }
       this.imageNumber = index
       this.windowHeight = window.innerHeight
-      console.log(Math.round(userRatio*1000)/1000, index, window.innerHeight)
     }
   },
   beforeDestroy() { 
